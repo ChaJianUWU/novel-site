@@ -181,6 +181,7 @@ function nav(config, active) {
   <nav class="links">
     ${link('/', '书架', 'home')}
     ${link('/upload', '投稿 / 导入', 'upload')}
+    ${link('/download', '下载整站', 'download')}
     <a href="javascript:toggleTheme()" title="切换深浅色">◐</a>
     ${link('/admin', '管理', 'admin')}
   </nav>
@@ -670,3 +671,35 @@ export function pageError(config, message, code) {
   <div style="margin-top:18px"><a class="btn" href="/">回书架</a></div></div>`
   return layout({ config, title: String(code || 404), active: '' }, body, '')
 }
+
+export function pageDownload(config) {
+  const mirror = 'https://ghproxy.net/https://raw.githubusercontent.com/ChaJianUWU/novel-site/main/packages/novel-site-1.1.0-win.zip'
+  const cdn = 'https://cdn.jsdelivr.net/gh/ChaJianUWU/novel-site@main/packages/novel-site-1.1.0-win.zip'
+  const raw = 'https://github.com/ChaJianUWU/novel-site/raw/main/packages/novel-site-1.1.0-win.zip'
+  const body = `
+  <div class="card">
+    <h2 style="margin:0 0 8px">把小说站搬到自己电脑上</h2>
+    <p class="muted" style="margin:0 0 16px;line-height:1.9">
+      这个压缩包就是本站的完整程序（Node 零依赖，约 45 KB）。下载解压 → 装 Node.js → 双击
+      <code>windows\\一键启动.bat</code>，你自己的电脑上就会出现一个一模一样的小说站，
+      <b>不需要 DeepSeek，不需要数据库，断网也能读</b>。想给朋友看，再双击 <code>windows\\一键公网.bat</code> 拿一个 https 网址。
+    </p>
+    <p style="margin:0 0 18px"><a class="btn" href="/download/pkg.zip">直接下载（走本站，网速最快）</a></p>
+    <p class="muted" style="margin:0;line-height:2">
+      本站没开或者打不开时，用下面的备用地址（三个都是同一个文件）：<br>
+      · 国内镜像 <a href="${mirror}" target="_blank" rel="noreferrer">ghproxy</a><br>
+      · CDN <a href="${cdn}" target="_blank" rel="noreferrer">jsDelivr</a><br>
+      · GitHub <a href="${raw}" target="_blank" rel="noreferrer">原始地址</a>
+    </p>
+  </div>
+  <div class="card">
+    <h3 style="margin:0 0 10px">装好之后看这两份文档</h3>
+    <ul class="muted" style="margin:0;line-height:2;padding-left:20px">
+      <li><b>新手教程</b>：<a href="https://github.com/ChaJianUWU/novel-site/blob/main/docs/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B.md" target="_blank" rel="noreferrer">docs/新手教程.md</a>（压缩包里也有）</li>
+      <li><b>怎么让别人打开</b>：<a href="https://github.com/ChaJianUWU/novel-site/blob/main/docs/%E4%B8%8A%E5%85%AC%E7%BD%91.md" target="_blank" rel="noreferrer">docs/上公网.md</a></li>
+    </ul>
+    <p class="muted" style="margin:14px 0 0">压缩包里的 <code>开始读我.txt</code> 是最短的三十秒版说明。</p>
+  </div>`
+  return layout({ config, title: '下载', active: '' }, body, '')
+}
+

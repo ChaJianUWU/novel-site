@@ -12,9 +12,11 @@
 
 | 你要的 | 拿这个 |
 | --- | --- |
-| Windows 绿色包（含双击启动、公网脚本、教程）**[44 KB]** | [`packages/novel-site-1.1.0-win.zip`](packages/novel-site-1.1.0-win.zip) |
+| Windows 绿色包（含双击启动、公网脚本、教程）**[45 KB]** | [镜像加速下载](https://ghproxy.net/https://raw.githubusercontent.com/ChaJianUWU/novel-site/main/packages/novel-site-1.1.0-win.zip) · [jsDelivr](https://cdn.jsdelivr.net/gh/ChaJianUWU/novel-site@main/packages/novel-site-1.1.0-win.zip) · [GitHub 原始](packages/novel-site-1.1.0-win.zip) |
 | 一份照着做就行的教程 | [`docs/新手教程.md`](docs/新手教程.md) |
 | 怎么让别人能打开网址 | [`docs/上公网.md`](docs/上公网.md) |
+
+（国内直连 GitHub 常常打不开，所以第一列放了镜像；三个地址是同一个文件。）
 
 三个动作：**装 Node.js → 解压 → 双击 `windows\一键启动.bat`**，浏览器自动打开站点；
 想给朋友看，再双击 `windows\一键公网.bat` 拿一个 https 网址。
@@ -175,7 +177,7 @@ POST /api/sync                     整库覆盖（需 x-sync-key）
 所有写操作都接受两种凭证：`x-edit-key`（这本书的口令）或 `x-admin-key`（站长密钥）；
 同步接口另外只认 `x-sync-key`，因为它是给插件整库覆盖用的。
 
-页面路由：`/` 书架、`/n/:id` 书页、`/r/:id/:cid` 阅读、`/upload` 投稿/导入、`/edit/:id` 编辑、`/admin` 后台。
+页面路由：`/` 书架、`/n/:id` 书页、`/r/:id/:cid` 阅读、`/upload` 投稿/导入、`/edit/:id` 编辑、`/admin` 后台、`/download` 整站下载（`/download/pkg.zip` 直接下发 `packages/*.zip`）。
 
 ### 自测
 
@@ -205,6 +207,9 @@ scp data\kv.json root@新IP:/opt/novel/data/
 
 `docs\新手教程.md` 是面向「不会命令行」的读者写的：装 Node、解压、双击、投稿、拿口令、开公网、备份，全程截图式步骤。
 `docs\上公网.md` 覆盖四条上线路线（Serveo/Pinggy 隧道、cloudflared、便宜 VPS、PaaS）和环境变量对照表。
+
+站点自己也有一个下载页：打开 `/download` 就能拿到同一份压缩包（`/download/pkg.zip`），
+不用碰 GitHub，适合把站分享给不懂技术的人——他打开你的站，点「下载整站」就行。
 
 绿色包内容：
 

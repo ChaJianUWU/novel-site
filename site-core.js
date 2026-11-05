@@ -24,6 +24,7 @@ import {
   pageNovel,
   pageReader,
   pageUpload,
+  pageDownload,
 } from './ui.js'
 
 const JSON_HEADERS = { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' }
@@ -557,6 +558,40 @@ async function handleApi(request, env, url, parts) {
   throw new HttpError(404, '没有这个接口')
 }
 
+// ---------------- 下载 ----------------
+
+// /download         介绍页：把整站程序打包带走
+// /download/pkg.zip 直接从本站下载压缩包（需要部署目录里带 packages/*.zip）
+async function handleDownload(env, config, parts) {
+  if (parts[1] !== 'pkg.zip') return text(pageDownload(config))
+
+  let buf = null
+  let name = 'novel-site-win.zip'
+  try {
+    const fs = await import('node:fs/promises')
+    const path = await import('node:path')
+    const { fileURLToPath } = await import('node:url')
+    const dir = path.join(path.dirname(fileURLToPath(import.meta.url)), 'packages')
+    const zips = (await fs.readdir(dir)).filter((n) => n.endsWith('.zip')).sort()
+    if (zips.length) {
+      name = zips[zips.length - 1]
+      buf = await fs.readFile(path.join(dir, name))
+    }
+  } catch {
+    buf = null
+  }
+  if (!buf) throw new HttpError(404, '这个部署没带压缩包，去 GitHub 的 packages 目录下载')
+
+  return new Response(buf, {
+    headers: {
+      'content-type': 'application/zip',
+      'content-disposition': `attachment; filename="${name}"`,
+      'content-length': String(buf.length),
+      'cache-control': 'no-store',
+    },
+  })
+}
+
 // ---------------- 页面 ----------------
 
 async function handlePage(env, url, parts) {
@@ -577,6 +612,7 @@ async function handlePage(env, url, parts) {
 
   if (parts[0] === 'upload') return text(pageUpload(config))
   if (parts[0] === 'admin') return text(pageAdmin(config))
+  if (parts[0] === 'download') return await handleDownload(env, config, parts)
 
   if (parts[0] === 'n' && parts[1]) {
     const novel = await readNovel(env, parts[1])
