@@ -12,7 +12,7 @@
 
 | 你要的 | 拿这个 |
 | --- | --- |
-| Windows 绿色包（含双击启动、公网脚本、教程）**[45 KB]** | [镜像加速下载](https://ghproxy.net/https://raw.githubusercontent.com/ChaJianUWU/novel-site/main/packages/novel-site-1.1.0-win.zip) · [jsDelivr](https://cdn.jsdelivr.net/gh/ChaJianUWU/novel-site@main/packages/novel-site-1.1.0-win.zip) · [GitHub 原始](packages/novel-site-1.1.0-win.zip) |
+| Windows 绿色包（含双击启动、公网脚本、教程）**[52 KB]** | [镜像加速下载](https://ghproxy.net/https://raw.githubusercontent.com/ChaJianUWU/novel-site/main/packages/novel-site-latest-win.zip) · [jsDelivr](https://cdn.jsdelivr.net/gh/ChaJianUWU/novel-site@main/packages/novel-site-latest-win.zip) · [GitHub 原始](packages/novel-site-latest-win.zip) |
 | 一份照着做就行的教程 | [`docs/新手教程.md`](docs/新手教程.md) |
 | 怎么让别人能打开网址 | [`docs/上公网.md`](docs/上公网.md) |
 
@@ -21,7 +21,7 @@
 三个动作：**装 Node.js → 解压 → 双击 `windows\一键启动.bat`**，浏览器自动打开站点；
 想给朋友看，再双击 `windows\一键公网.bat` 拿一个 https 网址。
 
-压缩包校验（下载后可比对）： [`packages/novel-site-1.1.0-win.zip.sha256`](packages/novel-site-1.1.0-win.zip.sha256)
+压缩包校验（下载后可比对）： [`packages/novel-site-latest-win.zip.sha256`](packages/novel-site-latest-win.zip.sha256)
 
 自己重新打包（改了代码之后）：
 
@@ -60,13 +60,15 @@ Cloudflare 的 `*.workers.dev` 在国内被 DNS 污染 + TLS 阻断，打不开�
    git branch -M main
    git push -u origin main
    ```
-   （仓库已经 init + commit 好了，就上面三条。没有远程仓库就去 GitHub 网页 New repository，名字 `novel-site`，**不要**勾 Add README，然后复制它给的地址替换掉那行 URL。）
+   （仓库已经 init + commit 好了，就上面三条。没有远程仓库就去 GitHub 网页 New repository，名字 
+ovel-site`，**不要**勾 Add README，然后复制它给的地址替换掉那行 URL。）
 2. 打开 https://render.com → 用 GitHub 账号登录 → **New + → Web Service** → 首次会让你授权 Render 访问 GitHub，选 `Only select repositories` 只给这一个仓库。
 3. 填：
    - Language / Runtime：`Node`
    - Branch：`main`
    - Build Command：`echo "no build needed"`
-   - Start Command：`node server.mjs`
+   - Start Command：
+ode server.mjs`
    - Instance Type：`Free`
    - Environment Variables（点 Add Environment Variable）：
      - `DATA_DIR` = `/data`
@@ -85,7 +87,8 @@ Cloudflare 的 `*.workers.dev` 在国内被 DNS 污染 + TLS 阻断，打不开�
 
 1. 同样先推到公开 GitHub 仓库。
 2. https://app.koyeb.com → **Create Service → GitHub** → 选仓库 → 部署方式选 **Buildpack**。
-3. Run command：`node server.mjs`；Port：`8787`；实例选 **Free**。
+3. Run command：
+ode server.mjs`；Port：`8787`；实例选 **Free**。
 4. 环境变量同上（`SYNC_KEY`、`DATA_DIR=/data`），得到 `https://xxx.koyeb.app`。
 
 ### 方案 C：国内 VPS（最稳，数据不丢）
@@ -137,8 +140,8 @@ docker run -d --restart always -p 8787:8787 \
 | 动作 | 规则 |
 | --- | --- |
 | 发布新书 | 免登录，**作者名必填**（不填直接报错拒绝） |
-| 上传整本文件 | `/upload` 选 `.txt` / `.md`，自动识别「第X章 / 序章 / Chapter N / # 标题」并分章，可先预览再发布 |
-| 给已有书追加 | `/edit/:id` 里「导入文件追加」，按同样规则分章接在后面 |
+| 上传整本文件 | `/upload` 选 `.txt` / `.md` / **`.docx`（Word）**，自动识别「第X章 / 序章 / Chapter N / # 标题」并分章，可先预览再发布 |
+| 给已有书追加 | `/edit/:id` 里「导入文件追加」，txt / docx 都行，按同样规则分章接在后面 |
 | 编辑自己的书 | 建书时发的 18 位编辑口令存在访客浏览器里，凭口令改 |
 | 编辑口令丢了 | 用「书名 + 作者名」在 `/upload` 页找回；站长也可用同步密钥整库覆盖 |
 | 站长后台 | `/admin`，用管理员密钥（启动日志里的「管理员密钥」，或 `DATA_DIR/admin-key.txt` / `ADMIN_KEY` 环境变量） |
@@ -154,6 +157,7 @@ docker run -d --restart always -p 8787:8787 \
 GET  /healthz                      健康检查
 GET  /api/site                     站点配置 + 书架
 GET  /api/novels                   书架列表
+POST /api/extract                  从 docx / txt 文件里取正文（base64 传入，不写库）
 POST /api/split                    只分章预览，不写库
 POST /api/import                   新建书 + 正文自动分章（author 必填）
 POST /api/novel                    新建书（author 必填）
@@ -217,7 +221,7 @@ scp data\kv.json root@新IP:/opt/novel/data/
 novel-site/
 ├─ 开始读我.txt          先看这个
 ├─ 一键启动.bat 等        windows\ 下
-├─ server.mjs / site-core.js / txt.js / ui.js
+├─ server.mjs / site-core.js / txt.js / docx.js / ui.js
 ├─ docs\新手教程.md  docs\上公网.md
 ├─ data\                首次启动自动生成 kv.json 和密钥
 └─ Dockerfile / render.yaml / Procfile
@@ -225,6 +229,7 @@ novel-site/
 
 ## 七、更新日志
 
+- **1.1.1** — 投稿与追加支持 Word（.docx，零依赖自己解 zip 和 XML；老 .doc 提示另存为）。
 - **1.1.0** — 绿色包 + 新手教程；管理后台修好书目列表（补 `x-admin-key`）；后台密钥点按钮也能提交、记在浏览器、错密钥自动退回；导入同名同作者给 409 提醒，避免建重复的书；新增「退出后台」。
 - 1.0.0 — 免登录投稿/编辑、作者名必填、自动分章、txt 导入导出、口令找回、整库同步、后台配置。
 

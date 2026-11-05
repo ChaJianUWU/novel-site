@@ -17,6 +17,7 @@ const FILES = [
   'server.mjs',
   'site-core.js',
   'txt.js',
+  'docx.js',
   'ui.js',
   'package.json',
   'README.md',
@@ -63,7 +64,7 @@ writeFileSync(join(STAGE, '开始读我.txt'), [
   ''
 ].join('\r\n'), 'utf8')
 
-const zip = join(OUT, NAME + '.zip')
+const zip = join(OUT, 'novel-site-latest-win.zip')
 rmSync(zip, { force: true })
 execFileSync('powershell.exe', [
   '-NoProfile',
@@ -74,8 +75,15 @@ execFileSync('powershell.exe', [
 const buf = readFileSync(zip)
 const sha = createHash('sha256').update(buf).digest('hex')
 writeFileSync(zip + '.sha256', `${sha}  ${NAME}.zip\r\n`, 'utf8')
+
+// 再留一份固定名字的：链接永远不用跟着版本号改
+const latest = join(OUT, 'novel-site-latest-win.zip')
+copyFileSync(zip, latest)
+writeFileSync(latest + '.sha256', `${sha}  novel-site-latest-win.zip\r\n`, 'utf8')
+
 rmSync(join(OUT, '.stage'), { recursive: true, force: true })
 
 console.log(`打包完成：${basename(zip)}`)
+
 console.log(`大小：${(statSync(zip).size / 1024).toFixed(1)} KB`)
 console.log(`SHA256：${sha}`)

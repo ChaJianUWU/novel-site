@@ -157,6 +157,36 @@ function needKey(id){
   return k||'';
 }
 function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function readAsBase64(f){
+  return new Promise(function(res,rej){
+    var r=new FileReader();
+    r.onload=function(){
+      var u=new Uint8Array(r.result), CH=0x8000, out='';
+      for(var i=0;i<u.length;i+=CH){ out+=String.fromCharCode.apply(null,u.subarray(i,i+CH)) }
+      try{ res(window.btoa(out)) }catch(e){ rej(new Error('文件转码失败')) }
+    };
+    r.onerror=function(){ rej(new Error('读不出来这个文件')) };
+    r.readAsArrayBuffer(f);
+  });
+}
+// 任何文件 -> 纯文本：txt/md 本地直接读，docx 交给服务器解
+function fileToText(f){
+  var name=String(f.name||'').toLowerCase();
+  if(name.endsWith('.doc')) return Promise.reject(new Error('这是 Word 老格式 .doc，用 Word 打开另存为 .docx 再传'));
+  if(name.endsWith('.pdf')) return Promise.reject(new Error('PDF 先转成 txt 或 docx 再传'));
+  if(name.endsWith('.docx')||name.endsWith('.docm')){
+    if(f.size>5*1024*1024) return Promise.reject(new Error('文件太大（超过 5MB）'));
+    return readAsBase64(f).then(function(b64){ return call('/extract','POST',{name:f.name,data:b64}) })
+      .then(function(d){ return String(d.text||'') });
+  }
+  if(f.size>5*1024*1024) return Promise.reject(new Error('文件太大（超过 5MB）'));
+  return new Promise(function(res,rej){
+    var r=new FileReader();
+    r.onload=function(){ res(String(r.result||'')) };
+    r.onerror=function(){ rej(new Error('读不出来这个文件')) };
+    r.readAsText(f,'utf-8');
+  });
+}
 function fmtNum(n){ n=Number(n)||0; return n>=10000?(n/10000).toFixed(1).replace(/\\.0$/,'')+' 万':String(n); }
 function fmtTime(ts){ if(!ts) return '—'; var d=new Date(Number(ts)); if(isNaN(d.getTime())) return '—';
   function p(n){return n<10?'0'+n:''+n} return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes()); }
@@ -343,8 +373,8 @@ ${closed ? '<div class="notice">站长暂时关闭了公开投稿。你仍然可
   <div class="field"><label>作者名 <b>*</b>（本站没有登录，靠署名认人，必须填）</label><input id="author" placeholder="你的笔名" maxlength="30"></div>
   <div class="field"><label>简介（可选）</label><textarea id="summary" rows="2" placeholder="一句话说清这本书" maxlength="300"></textarea></div>
   <div class="field"><label>正文来源</label>
-    <div class="drop" id="drop"><b>点这里选文件，或把 txt 拖进来</b><span id="fname">支持 .txt / .md / .text，单文件 5MB 以内</span>
-      <input type="file" id="file" accept=".txt,.md,.text,text/plain" style="display:none">
+    <div class="drop" id="drop"><b>点这里选文件，或把文件拖进来</b><span id="fname">支持 .txt / .docx / .md，单文件 5MB 以内；Word 里的「第一章」这类标题会自动分章</span>
+      <input type="file" id="file" accept=".txt,.md,.text,.docx,.docm,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display:none">
     </div>
     <div class="field" style="margin-top:14px"><label>或者直接粘贴</label>
       <textarea id="text" rows="8" placeholder="把正文粘进来，会自动分章"></textarea>
@@ -366,15 +396,16 @@ ${closed ? '<div class="notice">站长暂时关闭了公开投稿。你仍然可
   dropEl.addEventListener('drop',function(e){ if(e.dataTransfer.files[0]) readFile(e.dataTransfer.files[0]); });
   fileEl.addEventListener('change',function(){ if(fileEl.files[0]) readFile(fileEl.files[0]); });
   function readFile(f){
-    if(f.size>5*1024*1024){ toast('文件太大（超过 5MB）','bad'); return; }
-    var r=new FileReader();
-    r.onload=function(){
-      textEl.value=String(r.result||'');
+    q('#fname').textContent='正在读取 '+f.name+'…';
+    fileToText(f).then(function(text){
+      textEl.value=text;
       q('#fname').textContent=f.name+' · '+(f.size/1024).toFixed(1)+' KB';
       if(!q('#title').value) q('#title').value=f.name.replace(/\\.[^.]+$/,'').slice(0,60);
       preview();
-    };
-    r.readAsText(f,'utf-8');
+    }).catch(function(e){
+      q('#fname').textContent=f.name+' · 读取失败';
+      toast(e.message,'bad');
+    });
   }
   function preview(){
     var text=textEl.value;
@@ -453,10 +484,10 @@ export function pageEdit(config, novel) {
     </div>
     <div class="panel">
       <h2 style="margin-top:0">追加导入（续写/补章）</h2>
-      <p class="muted" style="margin-top:0">贴一段或传 txt，自动分章后接到本书末尾，原有章节不动。</p>
+      <p class="muted" style="margin-top:0">贴一段，或传 txt / docx，自动分章后接到本书末尾，原有章节不动。</p>
       <div class="field"><textarea id="itext" rows="5" placeholder="要追加的正文"></textarea></div>
       <div class="row">
-        <input type="file" id="ifile" accept=".txt,.md,.text,text/plain" style="max-width:230px">
+        <input type="file" id="ifile" accept=".txt,.md,.text,.docx,.docm,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="max-width:230px">
         <button class="btn" id="btnAppend">分章并追加</button>
         <span class="muted" id="istat"></span>
       </div>
@@ -538,9 +569,10 @@ export function pageEdit(config, novel) {
   });
   q('#ifile').addEventListener('change',function(){
     var f=q('#ifile').files[0]; if(!f) return;
-    var r=new FileReader();
-    r.onload=function(){ q('#itext').value=String(r.result||''); q('#istat').textContent='已读入 '+f.name };
-    r.readAsText(f,'utf-8');
+    q('#istat').textContent='正在读取 '+f.name+'…';
+    fileToText(f).then(function(text){
+      q('#itext').value=text; q('#istat').textContent='已读入 '+f.name;
+    }).catch(function(e){ q('#istat').textContent=''; toast(e.message,'bad') });
   });
   q('#btnAppend').addEventListener('click',function(){
     var text=q('#itext').value;
@@ -673,9 +705,9 @@ export function pageError(config, message, code) {
 }
 
 export function pageDownload(config) {
-  const mirror = 'https://ghproxy.net/https://raw.githubusercontent.com/ChaJianUWU/novel-site/main/packages/novel-site-1.1.0-win.zip'
-  const cdn = 'https://cdn.jsdelivr.net/gh/ChaJianUWU/novel-site@main/packages/novel-site-1.1.0-win.zip'
-  const raw = 'https://github.com/ChaJianUWU/novel-site/raw/main/packages/novel-site-1.1.0-win.zip'
+  const mirror = 'https://ghproxy.net/https://raw.githubusercontent.com/ChaJianUWU/novel-site/main/packages/novel-site-latest-win.zip'
+  const cdn = 'https://cdn.jsdelivr.net/gh/ChaJianUWU/novel-site@main/packages/novel-site-latest-win.zip'
+  const raw = 'https://github.com/ChaJianUWU/novel-site/raw/main/packages/novel-site-latest-win.zip'
   const body = `
   <div class="card">
     <h2 style="margin:0 0 8px">把小说站搬到自己电脑上</h2>

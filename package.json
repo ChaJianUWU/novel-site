@@ -1,6 +1,6 @@
 {
   "name": "novel-site-server",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "type": "module",
   "description": "公网小说站：免登录上传/编辑，作者名必填，24 小时在线",

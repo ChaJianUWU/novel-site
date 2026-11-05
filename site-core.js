@@ -290,6 +290,42 @@ async function handleApi(request, env, url, parts) {
     return json({ chars: countChars(src), chapters })
   }
 
+  // ---- 从 Word / 文本文件里取正文（不写库）----
+  if (parts[0] === 'extract' && parts.length === 1 && method === 'POST') {
+    const body = await readBody(request)
+    const name = String(body.name || '').slice(0, 120)
+    const b64 = String(body.data || '')
+    if (!b64) throw new HttpError(400, '没有文件内容')
+    if (b64.length > MAX_TEXT * 2) throw new HttpError(413, '文件太大（上限 5MB）')
+    let buf
+    try {
+      buf = Buffer.from(b64, 'base64')
+    } catch (e) {
+      throw new HttpError(400, '文件内容不是合法 base64')
+    }
+    if (!buf.length) throw new HttpError(400, '文件是空的')
+    const lower = name.toLowerCase()
+    let text
+    if (lower.endsWith('.docx') || lower.endsWith('.docm')) {
+      const { docxToText } = await import('./docx.js')
+      try {
+        text = docxToText(buf)
+      } catch (e) {
+        throw new HttpError(400, '读不了这个 Word 文档：' + (e && e.message ? e.message : '格式不对'))
+      }
+    } else if (lower.endsWith('.doc')) {
+      throw new HttpError(400, '这是 Word 老格式 .doc。用 Word 打开它，另存为 .docx 再上传。')
+    } else if (lower.endsWith('.pdf')) {
+      throw new HttpError(400, 'PDF 读不了，请先复制成 txt，或在 Word 里另存为 docx。')
+    } else {
+      text = buf.toString('utf8').replace(/^\uFEFF/, '')
+    }
+    text = normalizeText(text)
+    if (!text.trim()) throw new HttpError(400, '这个文件里没有文字')
+    if (text.length > MAX_TEXT) throw new HttpError(413, '文本太大（上限 5MB）')
+    return json({ name, chars: countChars(text), text })
+  }
+
   // ---- 新建（可带正文自动分章）----
   if (parts[0] === 'import' && parts.length === 1 && method === 'POST') {
     if (config.allowPublicCreate === false) throw new HttpError(403, '站长暂时关闭了公开投稿')
