@@ -4,6 +4,29 @@
 本地 DSH 关掉也照常在线，24 小时可读。
 
 零依赖，Node 18+ 直接跑；同一套代码也能用 Docker 跑在任何云主机上。
+**不需要 DeepSeek、不需要数据库、不需要会写代码。**
+
+---
+
+## 零、不想看代码，直接下载就能用
+
+| 你要的 | 拿这个 |
+| --- | --- |
+| Windows 绿色包（含双击启动、公网脚本、教程）**[44 KB]** | [`packages/novel-site-1.1.0-win.zip`](packages/novel-site-1.1.0-win.zip) |
+| 一份照着做就行的教程 | [`docs/新手教程.md`](docs/新手教程.md) |
+| 怎么让别人能打开网址 | [`docs/上公网.md`](docs/上公网.md) |
+
+三个动作：**装 Node.js → 解压 → 双击 `windows\一键启动.bat`**，浏览器自动打开站点；
+想给朋友看，再双击 `windows\一键公网.bat` 拿一个 https 网址。
+
+压缩包校验（下载后可比对）： [`packages/novel-site-1.1.0-win.zip.sha256`](packages/novel-site-1.1.0-win.zip.sha256)
+
+自己重新打包（改了代码之后）：
+
+```powershell
+npm run pack      # → packages/novel-site-<版本>-win.zip + .sha256
+npm run verify    # → 69 项自测
+```
 
 ---
 
@@ -175,3 +198,28 @@ scp data\kv.json root@新IP:/opt/novel/data/
 ```
 
 `data\kv.json` 就是全部内容（含编辑口令），别公开它。
+
+---
+
+## 六、给不写代码的人看的部分
+
+`docs\新手教程.md` 是面向「不会命令行」的读者写的：装 Node、解压、双击、投稿、拿口令、开公网、备份，全程截图式步骤。
+`docs\上公网.md` 覆盖四条上线路线（Serveo/Pinggy 隧道、cloudflared、便宜 VPS、PaaS）和环境变量对照表。
+
+绿色包内容：
+
+```
+novel-site/
+├─ 开始读我.txt          先看这个
+├─ 一键启动.bat 等        windows\ 下
+├─ server.mjs / site-core.js / txt.js / ui.js
+├─ docs\新手教程.md  docs\上公网.md
+├─ data\                首次启动自动生成 kv.json 和密钥
+└─ Dockerfile / render.yaml / Procfile
+```
+
+## 七、更新日志
+
+- **1.1.0** — 绿色包 + 新手教程；管理后台修好书目列表（补 `x-admin-key`）；后台密钥点按钮也能提交、记在浏览器、错密钥自动退回；导入同名同作者给 409 提醒，避免建重复的书；新增「退出后台」。
+- 1.0.0 — 免登录投稿/编辑、作者名必填、自动分章、txt 导入导出、口令找回、整库同步、后台配置。
+

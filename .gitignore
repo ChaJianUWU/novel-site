@@ -10,7 +10,13 @@ boot.err
 # 本机私有：SSH 隧道私钥、临时工具、运行态地址
 serveo_key
 serveo_key.pub
-tools/
 last-url.txt
 *.bak
 *.bak-*
+
+# 本机私有工具（打包脚本以外的临时东西别提交）
+tools/*
+!tools/make-package.mjs
+
+# 打包中间产物
+packages/.stage/
