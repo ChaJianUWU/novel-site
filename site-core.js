@@ -1,4 +1,4 @@
-// 小说站核心：路由 + API + 页面渲染
+﻿// 小说站核心：路由 + API + 页面渲染
 //
 // 运行环境：Node（server.mjs 动态 import）或 Cloudflare Worker。
 // 存储：env.SITE_DB（KV 风格：get/put/delete/list）
@@ -275,7 +275,7 @@ function takeRef(body) {
   if (!ref) return null
   const s = CHUNKS.get(ref)
   if (!s) throw new HttpError(410, '上传分片已过期，请重新上传')
-  CHUNKS.delete(ref)
+  s.used = (s.used || 0) + 1
   return Buffer.concat(s.parts.filter(Boolean))
 }
 

@@ -153,19 +153,35 @@ function postBig(path,body,field,mode,extra){
   if(mode==='b64'){ bytes=new Uint8Array(v.length); for(var q=0;q<v.length;q++) bytes[q]=v.charCodeAt(q)&0xff }
   else { bytes=new TextEncoder().encode(v) }
   var CH=12288, n=Math.max(1,Math.ceil(bytes.length/CH)), uid='';
+  function sleep(ms){ return new Promise(function(r){ setTimeout(r,ms) }) }
   function step(i){
     if(i>=n){
       var b={}; for(var k in body) b[k]=body[k];
       b[field]=''; b.ref=uid;
-      return call(path,'POST',b,extra);
+      function fin(tryN){
+        return call(path,'POST',b,extra).catch(function(e){
+          var st=e&&e.status;
+          if(tryN>=3 || (st && st<500)) throw e;
+          return sleep(1200*Math.pow(2,tryN)).then(function(){ return fin(tryN+1) });
+        });
+      }
+      return fin(0);
     }
     var sl=bytes.subarray(i*CH,(i+1)*CH), s='';
     for(var j=0;j<sl.length;j+=1) s+=String.fromCharCode(sl[j]);
-    return call('/chunk','POST',{uid:uid,i:i,n:n,d:window.btoa(s)}).then(function(d){
-      uid=d.uid;
-      if(typeof window.__upProg==='function'){ try{ window.__upProg(i+1,n) }catch(e){} }
-      return step(i+1);
-    });
+    var payload={uid:uid,i:i,n:n,d:window.btoa(s)};
+    function send(tryN){
+      return call('/chunk','POST',payload).then(function(d){
+        uid=d.uid;
+        if(typeof window.__upProg==='function'){ try{ window.__upProg(i+1,n) }catch(e){} }
+        return step(i+1);
+      }).catch(function(e){
+        if(tryN>=4) throw new Error('第 '+(i+1)+'/'+n+' 段没传上去，网络抖了一下。再按一次发布就行，已传的部分不用重来。');
+        if(typeof window.__upRetry==='function'){ try{ window.__upRetry(i+1,n,tryN+1) }catch(e2){} }
+        return sleep(700*Math.pow(2,tryN)).then(function(){ return send(tryN+1) });
+      });
+    }
+    return send(0);
   }
   return step(0);
 }
@@ -420,12 +436,15 @@ ${closed ? '<div class="notice">站长暂时关闭了公开投稿。你仍然可
   fileEl.addEventListener('change',function(){ if(fileEl.files[0]) readFile(fileEl.files[0]); });
   function readFile(f){
     q('#fname').textContent='正在读取 '+f.name+'…';
+    window.__upProg=function(a,b){ q('#fname').textContent=f.name+' · 上传中 '+Math.round(a/b*100)+'%' };
     fileToText(f).then(function(text){
+      window.__upProg=null;
       textEl.value=text;
       q('#fname').textContent=f.name+' · '+(f.size/1024).toFixed(1)+' KB';
       if(!q('#title').value) q('#title').value=f.name.replace(/\\.[^.]+$/,'').slice(0,60);
       preview();
     }).catch(function(e){
+      window.__upProg=null;
       q('#fname').textContent=f.name+' · 读取失败';
       toast(e.message,'bad');
     });
@@ -452,6 +471,7 @@ ${closed ? '<div class="notice">站长暂时关闭了公开投稿。你仍然可
     if(!author) return toast('作者名必须填——本站靠署名认人','bad');
     if(!text.trim()) return toast('正文还是空的','bad');
     var btn=q('#btnPublish'); btn.disabled=true; btn.textContent='发布中…';
+    window.__upProg=function(a,b){ btn.textContent='上传中 '+Math.round(a/b*100)+'%（'+a+'/'+b+'）' };
     function send(force){
       return postBig('/import',{title:title,author:author,summary:summary,text:text,force:!!force},'text','text').then(function(d){
         saveKey(d.id,d.editKey);
