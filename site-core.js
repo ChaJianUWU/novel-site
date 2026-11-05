@@ -596,6 +596,37 @@ async function handleApi(request, env, url, parts) {
 
 // ---------------- 下载 ----------------
 
+// /status           隧道与守护的实时状态（守护进程每 10 秒写一次 status.json）
+async function handleStatus() {
+  let st = null
+  try {
+    const fs = await import('node:fs/promises')
+    const path = await import('node:path')
+    const { fileURLToPath } = await import('node:url')
+    const dir = path.dirname(fileURLToPath(import.meta.url))
+    st = JSON.parse(await fs.readFile(path.join(dir, 'status.json'), 'utf8'))
+  } catch {
+    st = null
+  }
+  const now = Date.now()
+  const ago = (t) => (t ? Math.max(0, Math.round((now - t) / 1000)) + ' 秒前' : '—')
+  const rows = st
+    ? [
+        ['公网地址', st.url || '—'],
+        ['隧道连续存活', st.tunnelStart ? Math.round((now - st.tunnelStart) / 60000) + ' 分钟' : '—'],
+        ['最近一次探测成功', ago(st.lastOk)],
+        ['最近一次探测失败', ago(st.lastFail)],
+        ['累计重连次数', String(st.reconnects ?? 0)],
+        ['守护本轮启动', ago(st.watchdogStart)],
+      ]
+    : [['状态', '守护还没写出 status.json']]
+  const html = `<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>站点状态</title>
+<style>body{font:15px/1.7 -apple-system,"Segoe UI",sans-serif;margin:0;padding:28px;background:#faf9f7;color:#222}h1{font-size:20px;margin:0 0 16px}table{border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px #0001}td{padding:10px 16px;border-bottom:1px solid #eee}td:first-child{color:#666;white-space:nowrap}p{color:#666;font-size:13px;margin-top:16px}</style>
+<h1>小说站 · 运行状态</h1><table>${rows.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('')}</table>
+<p>这个页面本身能打开就说明此刻站是通的；刷新即看最新。</p></html>`
+  return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } })
+}
+
 // /download         介绍页：把整站程序打包带走
 // /download/pkg.zip 直接从本站下载压缩包（需要部署目录里带 packages/*.zip）
 async function handleDownload(env, config, parts) {
@@ -690,6 +721,7 @@ export default {
 
     try {
       if (path === '/healthz') return json({ ok: true })
+      if (path === '/status') return await handleStatus()
       if (parts[0] === 'api') return await handleApi(request, env, url, parts.slice(1))
       if (request.method !== 'GET' && request.method !== 'HEAD') throw new HttpError(405, '不支持的方法')
       return await handlePage(env, url, parts)
