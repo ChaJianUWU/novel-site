@@ -562,12 +562,13 @@ export function pageEdit(config, novel) {
 
 export function pageAdmin(config) {
   const body = `<h1>管理后台</h1>
-<p class="muted">用站长密钥进入。密钥就是 <span class="mono">MANAGER_KEY</span>：服务端环境变量 <span class="mono">ADMIN_KEY</span>，默认等于同步密钥。</p>
+<p class="muted">用站长密钥进入。密钥在服务器启动日志的「管理员密钥」一行，也在服务器的 <span class="mono">data/admin-key.txt</span> 里。填一次会记在这台浏览器，下次打开直接进。</p>
 <div class="panel" id="login">
-  <div class="field"><label>管理员密钥</label><input id="akey" type="password" placeholder="粘进来" autocomplete="off"></div>
+  <div class="field"><label>管理员密钥</label><input id="akey" type="password" placeholder="粘进来，回车即可" autocomplete="off"></div>
   <button class="btn pri" id="btnLogin">进入</button>
 </div>
 <div id="panel" style="display:none">
+  <div class="row" style="justify-content:flex-end;margin-bottom:10px"><button class="btn sm" id="btnLogout">退出后台</button></div>
   <div class="stats" id="stats"></div>
   <div class="panel">
     <h2 style="margin-top:0">站点设置</h2>
@@ -585,20 +586,31 @@ export function pageAdmin(config) {
   </div>
 </div>`
   const script = `(function(){
-  var key=''; try{ key=sessionStorage.getItem('novel_admin')||'' }catch(e){}
+  var key='';
+  try{ key=localStorage.getItem('novel_admin_key')||'' }catch(e){}
+  if(!key){ try{ key=sessionStorage.getItem('novel_admin')||'' }catch(e){} }
+  try{ var mk=/[?&]k=([^&]+)/.exec(location.search); if(mk){ var qk=decodeURIComponent(mk[1]).trim(); if(qk) key=qk } }catch(e){}
+  function remember(v){ try{ localStorage.setItem('novel_admin_key',v) }catch(e){} try{ sessionStorage.setItem('novel_admin',v) }catch(e){} }
+  function forget(){ try{ localStorage.removeItem('novel_admin_key') }catch(e){} try{ sessionStorage.removeItem('novel_admin') }catch(e){} }
   function hdr(){ return {'x-admin-key':key} }
   function fmt(t){ if(!t) return '—'; var d=new Date(Number(t)); function p(n){return n<10?'0'+n:''+n}
     return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes()) }
   function enter(){
+    var typed=String(q('#akey').value||'').trim();
+    if(typed) key=typed;
     if(!key) return toast('先填密钥','bad');
     call('/admin/login','POST',{key:key}).then(function(){
-      try{sessionStorage.setItem('novel_admin',key)}catch(e){}
+      remember(key);
       q('#login').style.display='none'; q('#panel').style.display='';
       refresh();
-    }).catch(function(e){ toast(e.message,'bad'); key='' });
+    }).catch(function(e){
+      forget();
+      key=''; q('#akey').value='';
+      toast(e.message||'密钥不对','bad');
+    });
   }
   q('#btnLogin').addEventListener('click',enter);
-  q('#akey').addEventListener('keydown',function(e){ if(e.key==='Enter'){ key=q('#akey').value.trim(); enter() } });
+  q('#akey').addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); enter() } });
   function refresh(){
     call('/admin/overview','GET',undefined,hdr()).then(function(d){
       var t=d.totals;
@@ -629,8 +641,19 @@ export function pageAdmin(config) {
       var c=d.config||{};
       q('#stitle').value=c.title||''; q('#ssub').value=c.subtitle||''; q('#sann').value=c.announcement||'';
       q('#sopen').value=c.allowPublicCreate===false?'0':'1';
-    }).catch(function(e){ toast(e.message,'bad') });
+    }).catch(function(e){
+      toast(e.message,'bad');
+      if(e.status===401||e.status===403){
+        forget();
+        key=''; q('#panel').style.display='none'; q('#login').style.display=''; q('#akey').focus();
+      }
+    });
   }
+  q('#btnLogout').addEventListener('click',function(){
+    forget(); key=''; q('#akey').value='';
+    q('#panel').style.display='none'; q('#login').style.display=''; q('#akey').focus();
+    toast('已退出后台','good');
+  });
   q('#btnSaveCfg').addEventListener('click',function(){
     call('/admin/config','PUT',{title:q('#stitle').value.trim(),subtitle:q('#ssub').value.trim(),
       announcement:q('#sann').value.trim(),allowPublicCreate:q('#sopen').value==='1'},hdr())

@@ -123,6 +123,7 @@ async function main() {
     r = await req('/admin')
     ok('管理页 200', r.status === 200 && r.body.includes('管理员密钥'))
     ok('后台书目请求带管理员密钥', r.body.includes("'/admin/overview','GET',undefined,hdr()"))
+    ok('后台密钥记在浏览器里', r.body.includes('novel_admin_key') && r.body.includes('btnLogout'))
     r = await req('/r/xxx/yyy')
     ok('不存在的章节 → 404', r.status === 404)
     r = await req('/n/nope')
