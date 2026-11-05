@@ -17,6 +17,8 @@ last-url.txt
 # 本机私有工具（打包脚本以外的临时东西别提交）
 tools/*
 !tools/make-package.mjs
+!tools/check-pages.mjs
+!tools/find-bad-escape.mjs
 
 # 打包中间产物
 packages/.stage/

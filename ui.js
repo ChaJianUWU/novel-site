@@ -440,7 +440,7 @@ ${closed ? '<div class="notice">站长暂时关闭了公开投稿。你仍然可
     }
     send(false).catch(function(e){
       if(e.status===409){
-        if(window.confirm(e.message+'\n\n确定再建一本？')){ return send(true).catch(function(err){ toast(err.message,'bad'); btn.disabled=false; btn.textContent='发布' }) }
+        if(window.confirm(e.message+'\\n\\n确定再建一本？')){ return send(true).catch(function(err){ toast(err.message,'bad'); btn.disabled=false; btn.textContent='发布' }) }
         btn.disabled=false; btn.textContent='发布'; return;
       }
       toast(e.message,'bad'); btn.disabled=false; btn.textContent='发布'
