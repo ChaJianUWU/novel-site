@@ -28,30 +28,33 @@ Cloudflare 的 `*.workers.dev` 在国内被 DNS 污染 + TLS 阻断，打不开�
 
 ### 方案 A：Render（推荐，免费，不用信用卡）
 
-1. 把本目录传到一个 **公开的 GitHub 仓库**（只传代码，别传 `data\`）：
+1. 把本目录传到一个 **GitHub 仓库**（Private 也可以；只传代码，别传 `data\`、`boot.log`）：
    ```powershell
    cd D:\DFY\novel-site-server
-   git init
-   git add .
-   git commit -m "novel site"
-   git branch -M main
    git remote add origin https://github.com/你的用户名/novel-site.git
+   git branch -M main
    git push -u origin main
    ```
-2. 打开 https://render.com → 用 GitHub 账号登录 → **New + → Web Service** → 选这个仓库。
+   （仓库已经 init + commit 好了，就上面三条。没有远程仓库就去 GitHub 网页 New repository，名字 `novel-site`，**不要**勾 Add README，然后复制它给的地址替换掉那行 URL。）
+2. 打开 https://render.com → 用 GitHub 账号登录 → **New + → Web Service** → 首次会让你授权 Render 访问 GitHub，选 `Only select repositories` 只给这一个仓库。
 3. 填：
-   - Runtime：`Node`
+   - Language / Runtime：`Node`
+   - Branch：`main`
    - Build Command：`echo "no build needed"`
    - Start Command：`node server.mjs`
    - Instance Type：`Free`
-   - Environment Variables：
+   - Environment Variables（点 Add Environment Variable）：
      - `DATA_DIR` = `/data`
      - `SYNC_KEY` = 自己编一串，比如 `my-secret-key-2024`（**记下来，插件要用**）
-4. 点 **Create Web Service**，等 1～2 分钟，得到 `https://xxx.onrender.com`。
+     - `NODE_VERSION` = `20`
+4. 点 **Deploy Web Service**，等 1～2 分钟，日志出现 `小说站已启动` 就成了，地址是 `https://xxx.onrender.com`。
+   打开它应该看到书架页；`https://xxx.onrender.com/healthz` 返回 `{"ok":true}` 就是活的。
 
-**免费层的坑**：没有持久磁盘，服务重启/休眠唤醒后 `data/` 会被清空。
-所以 **本地 DSH 里的稿库才是主库**，随时在插件里点一次「发布到公网」就恢复。
-真要长期存访客投稿：Render 挂 1GB 磁盘（约 $1/月，需信用卡）或直接上方案 C。
+**免费层的三个坑（务必看）**
+
+1. **休眠**：15 分钟没人访问就休眠，下一个访客要等 ~50 秒才出页面。对策：去 https://uptimerobot.com 注册免费账号，加一个 HTTP 监控，URL 填 `https://xxx.onrender.com/healthz`，间隔 5 分钟，就等于常驻不睡（免费额度够）。
+2. **没有持久磁盘**：重启/重新部署后 `data/` 被清空，访客投稿会没。**本地 DSH 的稿库才是主库**，在插件里点一次「发布到公网」就整库恢复。
+3. 要真正长期存访客投稿：Render 挂 1GB 磁盘（约 $1/月，需绑卡），或者直接上方案 C 国内 VPS（数据在本地盘，最省心）。
 
 ### 方案 B：Koyeb（免费层，无需信用卡）
 
