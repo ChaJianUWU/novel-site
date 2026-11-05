@@ -1,4 +1,4 @@
-﻿# 小说站常驻守护
+# 小说站常驻守护
 # 作用：本地 Node 站点 + serveo 公网隧道；掉线自动拉起，隧道「假活」（ssh 在但公网 502/超时）也会自动重连
 # 固定子域被 serveo 占用时会自动改用随机地址，并把新地址推给插件面板
 $ErrorActionPreference = 'SilentlyContinue'
@@ -10,6 +10,14 @@ $plugin = 'http://127.0.0.1:49679/dsh-novel-share'
 $syncKey = 'ea44e1ac8b71e533450b4186'
 $lastUrlFile = Join-Path $root 'last-url.txt'
 Set-Location $root
+
+# 单实例锁：重复启动的守护直接退出，避免两个守护互相杀隧道
+$mutex = New-Object System.Threading.Mutex($false, 'Local\NovelSiteKeeper')
+if (-not $mutex.WaitOne(0)) {
+  Write-Output '已有守护在运行，本实例退出'
+  exit
+}
+$script:mutex = $mutex   # 持有到进程结束，进程退出即释放
 
 $script:tunnelFail = 0   # 连续公网探测失败次数
 $script:reconnects = 0   # 本轮连续强制重连次数
