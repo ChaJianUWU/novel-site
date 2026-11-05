@@ -5,3 +5,4 @@ push.json
 *.log
 .DS_Store
 book.json
+boot.err
