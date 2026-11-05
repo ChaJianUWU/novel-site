@@ -112,23 +112,55 @@ docker run -d --restart always -p 8787:8787 \
 | 动作 | 规则 |
 | --- | --- |
 | 发布新书 | 免登录，**作者名必填**（不填直接报错拒绝） |
-| 编辑自己的书 | 建书时发的编辑口令存在访客浏览器里，凭口令改 |
-| 编辑口令丢了 | 站长用同步密钥整库覆盖（插件里的「发布到公网」） |
-| 章节结构 | 卷/章两层，章节可增删改，支持上/下一章跳转 |
+| 上传整本文件 | `/upload` 选 `.txt` / `.md`，自动识别「第X章 / 序章 / Chapter N / # 标题」并分章，可先预览再发布 |
+| 给已有书追加 | `/edit/:id` 里「导入文件追加」，按同样规则分章接在后面 |
+| 编辑自己的书 | 建书时发的 18 位编辑口令存在访客浏览器里，凭口令改 |
+| 编辑口令丢了 | 用「书名 + 作者名」在 `/upload` 页找回；站长也可用同步密钥整库覆盖 |
+| 站长后台 | `/admin`，用管理员密钥（启动日志里的「管理员密钥」，或 `DATA_DIR/admin-key.txt` / `ADMIN_KEY` 环境变量） |
+| 站长权限 | 看全站统计、改站名/公告、开关公开投稿、删任意书、改任意书 |
+| 导出 | `/api/export/:id` 或书页「导出 txt」按钮，直接下载全文 |
+| 阅读体验 | 深/浅色切换、字号调节、←/→ 翻章，设置存在访客浏览器 |
+| 章节结构 | 章节可增删改，支持上/下一章跳转 |
 | 数据落地 | `DATA_DIR/kv.json`，原子写入（临时文件 + rename） |
 
 接口一览（自建版和 Cloudflare 版完全一致）：
 
 ```
+GET  /healthz                      健康检查
 GET  /api/site                     站点配置 + 书架
-GET  /api/novel/:id                书详情
+GET  /api/novels                   书架列表
+POST /api/split                    只分章预览，不写库
+POST /api/import                   新建书 + 正文自动分章（author 必填）
 POST /api/novel                    新建书（author 必填）
+GET  /api/novel/:id                书详情
+PUT  /api/novel/:id                改书名/作者/简介
+DELETE /api/novel/:id              删书（编辑口令或管理员密钥）
+POST /api/novel/:id/import         追加导入（自动分章）
 GET  /api/novel/:id/:cid           读一章
 POST /api/novel/:id/chapter        加章
 PUT  /api/novel/:id/chapter/:cid   改章
+DELETE /api/novel/:id/chapter/:cid 删章
+GET  /api/export/:id               导出整本 txt
+GET  /api/keys?title=&author=      找回编辑口令
+POST /api/admin/login              校验管理员密钥
+GET  /api/admin/overview           全站统计（需 x-admin-key）
+PUT  /api/admin/config             改站点设置（需 x-admin-key）
+POST /api/admin/rebuild            重建书架索引（需 x-admin-key）
 POST /api/sync                     整库覆盖（需 x-sync-key）
-GET  /healthz                      健康检查
 ```
+
+所有写操作都接受两种凭证：`x-edit-key`（这本书的口令）或 `x-admin-key`（站长密钥）；
+同步接口另外只认 `x-sync-key`，因为它是给插件整库覆盖用的。
+
+页面路由：`/` 书架、`/n/:id` 书页、`/r/:id/:cid` 阅读、`/upload` 投稿/导入、`/edit/:id` 编辑、`/admin` 后台。
+
+### 自测
+
+```powershell
+node verify2.mjs        # 起临时目录+临时端口，把页面、分章、导入、权限、同步、导出全跑一遍
+node migrate-legacy.mjs # 旧数据升级（幂等，可重复跑）
+```
+
 
 ---
 

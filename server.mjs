@@ -7,12 +7,13 @@
 //   PORT       监听端口（平台一般会自己注入）
 //   DATA_DIR   数据目录，默认 ./data（要挂持久卷就把这里指到挂载点）
 //   SYNC_KEY   站长同步密钥；不填就自动生成一个存到 DATA_DIR/sync-key.txt
+//   ADMIN_KEY  管理员密钥（/admin 后台）；不填就自动生成到 DATA_DIR/admin-key.txt
 //   SITE_TITLE 站点兜底标题
 
 import { createServer } from 'node:http'
 import { readFile, writeFile, mkdir, rename } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 import { webcrypto } from 'node:crypto'
 
 if (!globalThis.crypto) globalThis.crypto = webcrypto
@@ -110,17 +111,36 @@ async function resolveSyncKey() {
   return generated
 }
 
-// ---------- 载入站点核心 ----------
+// ---------- 站长（管理员）密钥 ----------
 
-const source = await readFile(CORE_FILE, 'utf8')
-const worker = new Function(
-  source.replace(/export\s+default\s*\{/, 'const __worker = {') + '\nreturn __worker;',
-)()
+const ADMIN_FILE = join(DATA_DIR, 'admin-key.txt')
+
+async function resolveAdminKey() {
+  const fromEnv = String(process.env.ADMIN_KEY || '').trim()
+  if (fromEnv) return fromEnv
+  await mkdir(DATA_DIR, { recursive: true })
+  try {
+    const saved = (await readFile(ADMIN_FILE, 'utf8')).trim()
+    if (saved) return saved
+  } catch {}
+  const generated = cryptoRandom()
+  await writeFile(ADMIN_FILE, generated + '\n', 'utf8')
+  return generated
+}
+
+// ---------- 载入站点核心（标准 ESM 模块，支持 import） ----------
+
+const worker = (await import(pathToFileURL(CORE_FILE).href)).default
+if (!worker || typeof worker.fetch !== 'function') {
+  throw new Error('站点核心没有导出 fetch：' + CORE_FILE)
+}
 
 const SYNC_KEY = await resolveSyncKey()
+const ADMIN_KEY = await resolveAdminKey()
 const env = {
   SITE_DB: KV,
   SYNC_KEY,
+  ADMIN_KEY,
   SITE_TITLE: process.env.SITE_TITLE || '小说站',
 }
 
@@ -178,7 +198,8 @@ server.listen(PORT, () => {
   console.log('小说站已启动：http://127.0.0.1:' + PORT)
   console.log('数据目录：' + DATA_DIR)
   console.log('同步密钥：' + SYNC_KEY)
-  console.log('把这条密钥填到插件的「同步密钥」里，就能一键推送正文。')
+  console.log('管理员密钥：' + ADMIN_KEY)
+  console.log('后台 /admin 用管理员密钥进入；单本书的编辑口令在创建时发给作者。')
 })
 
 for (const signal of ['SIGINT', 'SIGTERM']) {
