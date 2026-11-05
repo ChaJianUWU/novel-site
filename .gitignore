@@ -1,0 +1,7 @@
+node_modules/
+data/
+boot.log
+push.json
+*.log
+.DS_Store
+book.json
