@@ -142,7 +142,7 @@ function call(path,method,body,extra){
   if(extra) for(var k in extra) h[k]=extra[k];
   return fetch('/api'+path,{method:method||'GET',headers:h,body:body===undefined?undefined:JSON.stringify(body)})
     .then(function(r){return r.json().catch(function(){return {}}).then(function(d){
-      if(!r.ok) throw new Error(d.error||('请求失败 '+r.status));
+      if(!r.ok) { var err=new Error(d.error||('请求失败 '+r.status)); err.status=r.status; err.data=d; throw err }
       return d;
     })});
 }
@@ -397,13 +397,22 @@ ${closed ? '<div class="notice">站长暂时关闭了公开投稿。你仍然可
     if(!author) return toast('作者名必须填——本站靠署名认人','bad');
     if(!text.trim()) return toast('正文还是空的','bad');
     var btn=q('#btnPublish'); btn.disabled=true; btn.textContent='发布中…';
-    call('/import','POST',{title:title,author:author,summary:summary,text:text}).then(function(d){
-      saveKey(d.id,d.editKey);
-      toast('发布成功，共 '+d.chapterCount+' 章','good');
-      pv.innerHTML='<div class="notice" style="margin-top:16px">发布成功：<a href="/n/'+d.id+'"><b>'+esc(d.title)+'</b></a> · '+d.chapterCount+' 章 · '+d.chars+' 字<br>编辑口令 <span class="mono">'+d.editKey+'</span> 已存在这台浏览器，换设备要自己记好。</div>';
-      btn.textContent='已发布'; 
-      setTimeout(function(){location.href='/n/'+d.id},1200);
-    }).catch(function(e){ toast(e.message,'bad'); btn.disabled=false; btn.textContent='发布' });
+    function send(force){
+      return call('/import','POST',{title:title,author:author,summary:summary,text:text,force:!!force}).then(function(d){
+        saveKey(d.id,d.editKey);
+        toast('发布成功，共 '+d.chapterCount+' 章','good');
+        pv.innerHTML='<div class="notice" style="margin-top:16px">发布成功：<a href="/n/'+d.id+'"><b>'+esc(d.title)+'</b></a> · '+d.chapterCount+' 章 · '+d.chars+' 字<br>编辑口令 <span class="mono">'+d.editKey+'</span> 已存在这台浏览器，换设备要自己记好。</div>';
+        btn.textContent='已发布';
+        setTimeout(function(){location.href='/n/'+d.id},1200);
+      });
+    }
+    send(false).catch(function(e){
+      if(e.status===409){
+        if(window.confirm(e.message+'\n\n确定再建一本？')){ return send(true).catch(function(err){ toast(err.message,'bad'); btn.disabled=false; btn.textContent='发布' }) }
+        btn.disabled=false; btn.textContent='发布'; return;
+      }
+      toast(e.message,'bad'); btn.disabled=false; btn.textContent='发布'
+    });
   });
 })();`
   return layout({ config, title: '投稿', active: 'upload' }, body, script)
@@ -591,7 +600,7 @@ export function pageAdmin(config) {
   q('#btnLogin').addEventListener('click',enter);
   q('#akey').addEventListener('keydown',function(e){ if(e.key==='Enter'){ key=q('#akey').value.trim(); enter() } });
   function refresh(){
-    call('/admin/overview').then(function(d){
+    call('/admin/overview','GET',undefined,hdr()).then(function(d){
       var t=d.totals;
       q('#stats').innerHTML=
         '<div class="stat"><b>'+t.novels+'</b><span>本书</span></div>'+

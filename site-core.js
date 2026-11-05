@@ -301,6 +301,11 @@ async function handleApi(request, env, url, parts) {
     if (src.length > MAX_TEXT) throw new HttpError(413, '文本太大（上限 5MB）')
     const list = splitChapters(src, { targetSize: body.targetSize })
     if (!list.length) throw new HttpError(400, '分不出章节，检查一下文本')
+    if (!body.force) {
+      const idx = await readIndex(env)
+      const same = idx.novels.find((n) => n.title === title && (n.author || '') === author)
+      if (same) throw new HttpError(409, '已经有同名同作者的《' + title + '》了。要再建一本就确认一下，想追加章节请去那本书的编辑页。')
+    }
     const novel = {
       id: rnd(12),
       title,

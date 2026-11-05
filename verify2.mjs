@@ -122,6 +122,7 @@ async function main() {
     ok('投稿页 200 且要求作者名', r.status === 200 && r.body.includes('作者名'))
     r = await req('/admin')
     ok('管理页 200', r.status === 200 && r.body.includes('管理员密钥'))
+    ok('后台书目请求带管理员密钥', r.body.includes("'/admin/overview','GET',undefined,hdr()"))
     r = await req('/r/xxx/yyy')
     ok('不存在的章节 → 404', r.status === 404)
     r = await req('/n/nope')
@@ -160,6 +161,12 @@ async function main() {
     const editKey = r.body.editKey
     ok('返回 18 位编辑口令', typeof editKey === 'string' && editKey.length === 18, editKey && editKey.length)
     ok('返回 3 章', r.body.chapterCount === 3, r.body)
+
+    r = await jpost('/api/import', { text: SAMPLE, title: '我的测试书', author: '测试作者' })
+    ok('同名同作者再导入 → 409 提醒', r.status === 409 && /同名/.test(r.body.error || ''), r.body)
+    r = await jpost('/api/import', { text: SAMPLE, title: '我的测试书', author: '测试作者', force: true })
+    ok('确认后可以再建一本', r.status === 200 && r.body.id !== novelId, r.body)
+    await req('/api/novel/' + r.body.id, { method: 'DELETE', headers: { 'x-edit-key': r.body.editKey } })
 
     r = await req('/api/novel/' + novelId)
     ok('书目元信息', r.status === 200 && r.body.novel.title === '我的测试书' && r.body.novel.chapters.length === 3)
