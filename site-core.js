@@ -31,6 +31,9 @@ const JSON_HEADERS = { 'content-type': 'application/json; charset=utf-8', 'cache
 const HTML_HEADERS = { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' }
 const MAX_TEXT = 5 * 1024 * 1024
 const MAX_CHAPTERS = 400
+// 分片上传暂存（公网隧道窄，大 body 会把连接打断，切成小片逐段传）
+const CHUNKS = new Map()
+const CHUNK_TTL = 20 * 60 * 1000
 
 class HttpError extends Error {
   constructor(status, message) {
@@ -266,9 +269,38 @@ async function readBody(request) {
   }
 }
 
+// 分片拼装：body.ref 指向已上传的分片会话，取走即销毁
+function takeRef(body) {
+  const ref = String((body && body.ref) || '')
+  if (!ref) return null
+  const s = CHUNKS.get(ref)
+  if (!s) throw new HttpError(410, '上传分片已过期，请重新上传')
+  CHUNKS.delete(ref)
+  return Buffer.concat(s.parts.filter(Boolean))
+}
+
 async function handleApi(request, env, url, parts) {
   const method = request.method.toUpperCase()
   const config = await readConfig(env)
+
+  // ---- 分片上传：窄隧道专用，单片 ~12KB ----
+  if (parts[0] === 'chunk' && method === 'POST') {
+    const body = await readBody(request)
+    const nowT = Date.now()
+    for (const [k, v] of CHUNKS) if (nowT - v.created > CHUNK_TTL) CHUNKS.delete(k)
+    let uid = String(body.uid || '')
+    let s = uid ? CHUNKS.get(uid) : null
+    if (!s) {
+      uid = rnd(16)
+      s = { parts: [], created: nowT }
+      CHUNKS.set(uid, s)
+    }
+    const i = Number(body.i) || 0
+    const n = Number(body.n) || 0
+    s.parts[i] = Buffer.from(String(body.d || ''), 'base64')
+    const got = s.parts.filter(Boolean).length
+    return json({ uid, got, n, done: n > 0 && got >= n })
+  }
 
   // ---- 站点信息 ----
   if (parts[0] === 'site' && parts.length === 1 && method === 'GET') {
@@ -283,7 +315,8 @@ async function handleApi(request, env, url, parts) {
   // ---- 分章预览（不写库）----
   if (parts[0] === 'split' && method === 'POST') {
     const body = await readBody(request)
-    const src = String(body.text || '')
+    const refBuf = takeRef(body)
+    const src = refBuf ? refBuf.toString('utf8').replace(/^\uFEFF/, '') : String(body.text || '')
     if (!src.trim()) throw new HttpError(400, '没有正文')
     if (src.length > MAX_TEXT) throw new HttpError(413, '文本太大（上限 5MB）')
     const chapters = previewChapters(src, { targetSize: body.targetSize })
@@ -294,7 +327,8 @@ async function handleApi(request, env, url, parts) {
   if (parts[0] === 'extract' && parts.length === 1 && method === 'POST') {
     const body = await readBody(request)
     const name = String(body.name || '').slice(0, 120)
-    const b64 = String(body.data || '')
+    const refBuf = takeRef(body)
+    const b64 = refBuf ? refBuf.toString('ascii') : String(body.data || '')
     if (!b64) throw new HttpError(400, '没有文件内容')
     if (b64.length > MAX_TEXT * 2) throw new HttpError(413, '文件太大（上限 5MB）')
     let buf
@@ -333,7 +367,8 @@ async function handleApi(request, env, url, parts) {
     const title = cleanTitle(body.title)
     const author = cleanAuthor(body.author)
     const summary = cleanSummary(body.summary)
-    const src = String(body.text || '')
+    const refBuf = takeRef(body)
+    const src = refBuf ? refBuf.toString('utf8').replace(/^\uFEFF/, '') : String(body.text || '')
     if (!src.trim()) throw new HttpError(400, '正文是空的')
     if (src.length > MAX_TEXT) throw new HttpError(413, '文本太大（上限 5MB）')
     const list = splitChapters(src, { targetSize: body.targetSize })
@@ -507,7 +542,8 @@ async function handleApi(request, env, url, parts) {
     if (parts[2] === 'import' && method === 'POST') {
       const body = await readBody(request)
       assertCanEdit(env, request, body, novel)
-      const src = String(body.text || '')
+      const refBuf = takeRef(body)
+      const src = refBuf ? refBuf.toString('utf8').replace(/^\uFEFF/, '') : String(body.text || '')
       if (!src.trim()) throw new HttpError(400, '没有内容')
       if (src.length > MAX_TEXT) throw new HttpError(413, '文本太大（上限 5MB）')
       const list = splitChapters(src, { targetSize: body.targetSize })

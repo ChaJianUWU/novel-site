@@ -1,4 +1,4 @@
-// 站点界面：样式、布局、各个页面、内联客户端脚本
+﻿// 站点界面：样式、布局、各个页面、内联客户端脚本
 //
 // 约定：这个文件里的 HTML 用模板字符串写；但**页面内嵌的 <script> 代码里不要出现反引号或 ${**，
 // 一律用字符串拼接，免得被外层模板提前求值。
@@ -146,6 +146,29 @@ function call(path,method,body,extra){
       return d;
     })});
 }
+function postBig(path,body,field,mode,extra){
+  var v=String(body[field]==null?'':body[field]);
+  if(!v || v.length<=18000) return call(path,'POST',body,extra);
+  var bytes;
+  if(mode==='b64'){ bytes=new Uint8Array(v.length); for(var q=0;q<v.length;q++) bytes[q]=v.charCodeAt(q)&0xff }
+  else { bytes=new TextEncoder().encode(v) }
+  var CH=12288, n=Math.max(1,Math.ceil(bytes.length/CH)), uid='';
+  function step(i){
+    if(i>=n){
+      var b={}; for(var k in body) b[k]=body[k];
+      b[field]=''; b.ref=uid;
+      return call(path,'POST',b,extra);
+    }
+    var sl=bytes.subarray(i*CH,(i+1)*CH), s='';
+    for(var j=0;j<sl.length;j+=1) s+=String.fromCharCode(sl[j]);
+    return call('/chunk','POST',{uid:uid,i:i,n:n,d:window.btoa(s)}).then(function(d){
+      uid=d.uid;
+      if(typeof window.__upProg==='function'){ try{ window.__upProg(i+1,n) }catch(e){} }
+      return step(i+1);
+    });
+  }
+  return step(0);
+}
 function saveKey(id,key){ try{localStorage.setItem('novel_key:'+id,key)}catch(e){} }
 function loadKey(id){ try{return localStorage.getItem('novel_key:'+id)||''}catch(e){return ''} }
 function clearKey(id){ try{localStorage.removeItem('novel_key:'+id)}catch(e){} }
@@ -176,7 +199,7 @@ function fileToText(f){
   if(name.endsWith('.pdf')) return Promise.reject(new Error('PDF 先转成 txt 或 docx 再传'));
   if(name.endsWith('.docx')||name.endsWith('.docm')){
     if(f.size>5*1024*1024) return Promise.reject(new Error('文件太大（超过 5MB）'));
-    return readAsBase64(f).then(function(b64){ return call('/extract','POST',{name:f.name,data:b64}) })
+    return readAsBase64(f).then(function(b64){ return postBig('/extract',{name:f.name,data:b64},'data','b64') })
       .then(function(d){ return String(d.text||'') });
   }
   if(f.size>5*1024*1024) return Promise.reject(new Error('文件太大（超过 5MB）'));
@@ -411,7 +434,7 @@ ${closed ? '<div class="notice">站长暂时关闭了公开投稿。你仍然可
     var text=textEl.value;
     if(!text.trim()){ pv.innerHTML=''; stat.textContent=''; parsed=null; return; }
     stat.textContent='正在检测…';
-    call('/split','POST',{text:text}).then(function(d){
+    postBig('/split',{text:text},'text','text').then(function(d){
       parsed=d;
       stat.textContent='共 '+d.chars+' 字，识别出 '+d.chapters.length+' 章';
       var rows=d.chapters.map(function(c,i){
@@ -430,7 +453,7 @@ ${closed ? '<div class="notice">站长暂时关闭了公开投稿。你仍然可
     if(!text.trim()) return toast('正文还是空的','bad');
     var btn=q('#btnPublish'); btn.disabled=true; btn.textContent='发布中…';
     function send(force){
-      return call('/import','POST',{title:title,author:author,summary:summary,text:text,force:!!force}).then(function(d){
+      return postBig('/import',{title:title,author:author,summary:summary,text:text,force:!!force},'text','text').then(function(d){
         saveKey(d.id,d.editKey);
         toast('发布成功，共 '+d.chapterCount+' 章','good');
         pv.innerHTML='<div class="notice" style="margin-top:16px">发布成功：<a href="/n/'+d.id+'"><b>'+esc(d.title)+'</b></a> · '+d.chapterCount+' 章 · '+d.chars+' 字<br>编辑口令 <span class="mono">'+d.editKey+'</span> 已存在这台浏览器，换设备要自己记好。</div>';
@@ -578,7 +601,7 @@ export function pageEdit(config, novel) {
     var text=q('#itext').value;
     if(!text.trim()) return toast('没有内容','bad');
     q('#istat').textContent='处理中…';
-    call('/novel/'+ID+'/import','POST',{text:text},hdr()).then(function(d){
+    postBig('/novel/'+ID+'/import',{text:text},'text','text',hdr()).then(function(d){
       q('#istat').textContent='追加了 '+d.added+' 章';
       chapters=chapters.concat(d.chapters.map(function(c){return {id:c.id,title:c.title}}));
       q('#side').innerHTML=chapters.map(function(c,i){

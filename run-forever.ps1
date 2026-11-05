@@ -24,12 +24,17 @@ try {
 
 $script:tunnelStart  = 0
 $script:reconnects   = 0
+$script:lastTry      = 0
+$script:backoffMs    = 0
 $script:useRandom    = $false
 $script:lastOk       = 0
 $script:lastFail     = 0
 $script:url          = ''
 $script:failStreak   = 0
+$script:startFails   = 0
+$script:tryBack      = $false
 $script:watchdogStart = [int64]([DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds())
+$script:lastReservedTry = $script:watchdogStart
 
 function Now-Ms { [int64]([DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()) }
 
@@ -93,23 +98,29 @@ function Start-Tunnel {
   $cmd = 'ssh -T -i serveo_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=NUL -o ServerAliveInterval=20 -o ServerAliveCountMax=3 -o ConnectTimeout=15 -o ExitOnForwardFailure=yes -R ' + $remote + ' serveo.net >> tunnel-serveo.log 2>&1'
   Start-Process -FilePath 'cmd.exe' -ArgumentList '/c', $cmd -WindowStyle Hidden
   $script:tunnelStart = (Now-Ms)
-  Log '公网隧道已启动，等待连通'
-  for ($i = 1; $i -le 8; $i++) {
-    Start-Sleep -Seconds 3
-    $u = Get-PublicUrl
-    if ($u -and (Test-Public $u)) {
-      $script:url = $u
-      $script:lastOk = (Now-Ms)
-      $script:failStreak = 0
-      Log "公网已连通: $u"
-      return
-    }
-  }
-  Log '启动后 24 秒内公网仍未连通，下轮继续'
+  $script:lastTry = (Now-Ms)
+  $wait = [math]::Min(180, [math]::Pow(2, [math]::Min(6, $script:startFails)) * 5)
+  $script:backoffMs = [int64]($wait * 1000)
+  $mode = if ($script:useRandom) { '随机地址' } else { "保留子域 $sub" }
+  Log ("公网隧道已启动（$mode，连续失败 $($script:startFails) 次，退避 ${wait}s）")
 }
 
 function Ensure-Tunnel {
+  $nowMs = (Now-Ms)
   if (-not (Get-TunnelProc)) {
+    if ($script:lastTry -gt 0 -and ($nowMs - $script:lastTry) -lt $script:backoffMs) { return }
+    if ($script:tryBack) {
+      Log '切回保留子域失败，退回随机地址'
+      $script:tryBack = $false
+      $script:useRandom = $true
+      $script:lastReservedTry = $nowMs
+      $script:startFails = 0
+    }
+    $script:startFails++
+    if ($script:startFails -ge 2 -and -not $script:useRandom) {
+      $script:useRandom = $true
+      Log '保留子域被 serveo 拒绝（旧会话未释放），先改用随机地址恢复服务，稍后自动抢回'
+    }
     Log '隧道进程不在，拉起'
     $script:tunnelStart = 0
     Start-Tunnel
@@ -127,6 +138,18 @@ function Ensure-Tunnel {
     }
     if ($script:failStreak -gt 0) { Log "公网已恢复: $u" }
     $script:failStreak = 0
+    $script:reconnects = 0
+    $script:backoffMs = 0
+    $script:startFails = 0
+    if ($script:useRandom -and $sub -and ($nowMs - $script:lastReservedTry) -gt 300000) {
+      $script:lastReservedTry = $nowMs
+      Log '尝试切回保留子域'
+      $script:useRandom = $false
+      $script:tryBack = $true
+      Stop-Tunnel
+      $script:tunnelStart = 0
+      Start-Tunnel
+    }
     return
   }
   $script:lastFail = (Now-Ms)
