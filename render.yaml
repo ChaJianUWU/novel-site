@@ -12,9 +12,8 @@ services:
         value: "20"
       - key: DATA_DIR
         value: /data
-      # 同步密钥：第一次部署时自动生成，去 Render 面板的 Environment 里复制出来，
-      # 填进 DSH 插件「站点设置 → 同步密钥」，以后就能一键推送。
+      # 同步密钥写死，部署完插件这边直接能推，不用再去面板里复制
       - key: SYNC_KEY
-        generateValue: true
+        value: ea44e1ac8b71e533450b4186
       - key: SITE_TITLE
         value: 我的小说站
