@@ -1,4 +1,4 @@
-﻿# 小说站常驻守护 v2
+# 小说站常驻守护 v2
 # 本地 node 站点 + serveo 公网隧道
 # 每 10 秒探测一次公网真实可用性；连续 2 次不通立即重连同一条保留子域，地址不变
 # 状态写入 status.json，公网 /status 页面可直接查看
@@ -189,6 +189,7 @@ while ($true) {
     Ensure-Tunnel
     Sync-Url
     Save-Status
+    try { & (Join-Path $PSScriptRoot 'tools\sync-static.ps1') } catch { }
   } catch {
     Log ('循环异常: ' + $_.Exception.Message)
   }
