@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>五 十一月 - 渊</title>
+<meta name="description" content="免登录写作，署上你的名字">
+<style>
+:root{color-scheme:light dark;--bg:#fbf9f5;--fg:#1f2328;--dim:#6b7280;--line:#e5e1d8;--card:#fff;--soft:#f3efe7;--accent:#8a5a2b;--danger:#b42318;--ok:#1f7a4d}
+html[data-theme="dark"]{color-scheme:dark;--bg:#14151a;--fg:#e8e6e1;--dim:#9aa0a6;--line:#2b2d33;--card:#1b1d22;--soft:#22252b;--accent:#d8a06a;--danger:#ff8a80;--ok:#63d29a}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]){color-scheme:dark;--bg:#14151a;--fg:#e8e6e1;--dim:#9aa0a6;--line:#2b2d33;--card:#1b1d22;--soft:#22252b;--accent:#d8a06a;--danger:#ff8a80;--ok:#63d29a}}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit;color:inherit}
+.wrap{max-width:1060px;margin:0 auto;padding:0 18px;width:100%}
+header.top{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--line);background:var(--bg)}
+header.top .wrap{display:flex;align-items:center;gap:12px;min-height:60px;padding-top:8px;padding-bottom:8px}
+.brand{font-weight:700;font-size:17px;line-height:1.2;max-width:52vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brand i{display:block;font-style:normal;font-weight:400;font-size:11.5px;color:var(--dim);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+nav.links{margin-left:auto;display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+nav.links a{padding:7px 12px;border-radius:999px;font-size:14px;color:var(--dim);white-space:nowrap}
+nav.links a:hover{background:var(--soft);color:var(--fg)}
+nav.links a.on{background:var(--fg);color:var(--bg)}
+main{flex:1;width:100%;padding:26px 0 60px}
+footer.bot{border-top:1px solid var(--line);padding:22px 0;color:var(--dim);font-size:13px;text-align:center}
+footer.bot a{color:var(--dim);border-bottom:1px dotted var(--line)}
+h1{font-size:26px;line-height:1.3;margin:0 0 10px}
+h2{font-size:17px;margin:34px 0 12px}
+.hero{padding:14px 0 6px}
+.hero h1{font-size:30px;letter-spacing:.5px}
+.hero p{color:var(--dim);margin:6px 0 0;font-size:15px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.spacer{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:14.5px;line-height:1.2;transition:.15s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.pri{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:600}
+.btn.pri:hover{opacity:.88;color:var(--bg)}
+.btn.danger{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 40%,var(--line))}
+.btn.sm{padding:6px 11px;font-size:13px;border-radius:8px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.search{display:flex;gap:8px;margin:20px 0 24px}
+.search input{flex:1;padding:11px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);outline:none}
+.search input:focus{border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px}
+.card{display:block;padding:17px 18px;border:1px solid var(--line);border-radius:14px;background:var(--card);transition:.16s}
+.card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 8px 22px -16px rgba(0,0,0,.4)}
+.card h3{margin:0 0 6px;font-size:17px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .who{color:var(--accent);font-size:13.5px;font-weight:600}
+.card .sum{color:var(--dim);font-size:13.5px;margin:8px 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:22px}
+.card .meta{color:var(--dim);font-size:12.5px;margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+.notice{padding:12px 16px;border-radius:12px;background:var(--soft);border:1px solid var(--line);font-size:14px;color:var(--dim);margin:0 0 22px;white-space:pre-wrap}
+.empty{padding:56px 20px;text-align:center;color:var(--dim);border:1px dashed var(--line);border-radius:16px}
+.empty b{display:block;color:var(--fg);font-size:17px;margin-bottom:6px}
+ul.ch{list-style:none;padding:0;margin:16px 0 0;border-top:1px solid var(--line)}
+ul.ch li{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+ul.ch li span.n{color:var(--dim);font-size:12.5px;min-width:30px;text-align:right;font-variant-numeric:tabular-nums}
+ul.ch li a{flex:1;padding:13px 2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ul.ch li a:hover{color:var(--accent)}
+ul.ch li em{font-style:normal;color:var(--dim);font-size:12.5px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
+.tag{font-size:12px;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--dim);border:1px solid var(--line)}
+article.read{max-width:40em;margin:0 auto;font-family:Georgia,"Noto Serif SC","Songti SC",serif;font-size:19px;line-height:1.95;letter-spacing:.02em}
+article.read h1{font-family:inherit;font-size:22px;margin:0 0 4px}
+article.read .by{color:var(--dim);font-size:14px;margin-bottom:26px;font-family:system-ui,sans-serif}
+article.read p{margin:0 0 1.05em;text-indent:2em;word-break:break-word}
+article.read p.noind{text-indent:0}
+.chapnav{max-width:40em;margin:36px auto 0;display:flex;gap:10px;justify-content:space-between;border-top:1px solid var(--line);padding-top:18px}
+.chapnav a{flex:1;text-align:center;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:14px;background:var(--card)}
+.chapnav a:hover{border-color:var(--accent);color:var(--accent)}
+.chapnav a.off{opacity:.4;pointer-events:none}
+.field{margin:0 0 16px}
+.field label{display:block;font-size:13.5px;color:var(--dim);margin-bottom:6px}
+.field label b{color:var(--danger)}
+.field input,.field textarea{width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:var(--card);outline:none;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--accent)}
+.field .hint{font-size:12.5px;color:var(--dim);margin-top:6px}
+.panel{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:20px;margin:0 0 20px}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:26px;text-align:center;color:var(--dim);background:var(--card);cursor:pointer;transition:.15s}
+.drop:hover,.drop.over{border-color:var(--accent);color:var(--accent);background:var(--soft)}
+.drop b{display:block;color:var(--fg);font-size:16px;margin-bottom:4px}
+.preview{max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:14px}
+.preview table{width:100%;border-collapse:collapse;font-size:13.5px}
+.preview th,.preview td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px}
+.preview th{color:var(--dim);font-weight:500;position:sticky;top:0;background:var(--card)}
+.preview td.n{color:var(--dim);font-variant-numeric:tabular-nums}
+table.admin{width:100%;border-collapse:collapse;font-size:14px}
+table.admin th,table.admin td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+table.admin th{color:var(--dim);font-weight:500;font-size:13px}
+table.admin td.t{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.stat{flex:1;min-width:120px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--card)}
+.stat b{display:block;font-size:22px;line-height:1.2}
+.stat span{color:var(--dim);font-size:12.5px}
+.split{display:grid;grid-template-columns:250px 1fr;gap:18px;align-items:start}
+@media (max-width:780px){.split{grid-template-columns:1fr}}
+.side{border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden;max-height:70vh;overflow-y:auto}
+.side div{padding:9px 13px;font-size:13.5px;border-bottom:1px solid var(--line);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.side div:hover{background:var(--soft)}
+.side div.on{background:var(--fg);color:var(--bg)}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#111;color:#fff;padding:11px 18px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.22s;z-index:99;max-width:88vw}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast.bad{background:#b42318}
+.toast.good{background:#1f7a4d}
+.kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-radius:5px;padding:2px 5px;color:var(--dim)}
+.muted{color:var(--dim);font-size:13.5px}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;background:var(--soft);padding:2px 7px;border-radius:6px;word-break:break-all}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../../index.html">我的小说站<i>免登录写作，署上你的名字</i></a>
+  <nav class="links">
+    <a href="../../index.html" class="">书架</a>
+  </nav>
+</div></header>
+<main><div class="wrap">
+<article class="read">
+  <h1>五 十一月</h1>
+  <div class="by">茶涧 · 3529 字</div>
+<p>十一月不是我们忙，是机器忙。</p>
+<p>机器不能停。要停，得写单子，报到生产那边批；批下来，才停两个钟头。我们要做的事只有一件：让它别停。</p>
+<p>每周五早上八点半开会，在二楼东头那间。长桌子，一头坐着科长，另一头的空调漏水，地上放一个塑料盆，一天倒一回。</p>
+<p>会念三样：上周报修多少，修好多少，没修的卡在哪儿。念到没修的，念到谁的名字，谁说话。</p>
+<p>那一周念到一台老机床，主轴响，要换轴承。备件在外协那边，单子递上去十二天。</p>
+<p>科长问：还能转吗。</p>
+<p>老李说：能转，响了半个月了。</p>
+<p>科长说：跟生产那边说一声，出了事不担我们的责。</p>
+<p>老李说：说了。</p>
+<p>会就散了。散以前科长添了一句：十一月了，管子该包的包上。这句话没人应，都记在本子上。</p>
+<p>每天早上巡线。</p>
+<p>八点以前出门，蓝工装，安全帽，兜里一个本子一支笔，腰上挂一把小手电。冬装的袖子长，长出半只手，我卷两道，走两步又滑下来。</p>
+<p>路线四条：一号楼后头的管廊、二号楼东侧、锅炉房到东门、还有研发楼西边那一小段。</p>
+<p>看三样：阀门渗不渗，法兰的螺栓松不松，保温破没破。地上有水渍，就顺着水渍往上找。</p>
+<p>找到就记：位置、什么毛病、几号。回来抄到表上，抄完递给班长。</p>
+<p>二号楼东侧那根管子，外面看着干，摸着潮。我把保温棉掰开一块，里头全是水，顺着管子往下淌，看不见，都攒在棉里。</p>
+<p>报上去，下午拆了一段，法兰的垫片换了。班长过来看了一眼，说：你这手比眼睛准。</p>
+<p>我说：摸着潮。</p>
+<p>他说：别人也摸。</p>
+<p>一天走下来七千多步。鞋底磨得比自行车胎快。</p>
+<p>下午画图。</p>
+<p>图是别人画的，画得潦草：线歪，尺寸标在角上，看半天不知道标的是哪一条。</p>
+<p>我重画。粗实线零点七，细实线零点三五，字写在尺寸线上头，正着看。</p>
+<p>画完打印，压在图板的玻璃底下。</p>
+<p>一张支架的图我改了三回，都是孔距。第一回差两毫米，第二回差一毫米，第三回拿卡尺量着画。</p>
+<p>老李说：能用就行，这又不是造飞机。</p>
+<p>我说：嗯。</p>
+<p>下一张还是这么画。</p>
+<p>第二周包管。</p>
+<p>岩棉扎手。一碰就痒，痒过一阵变疼，细丝扎在指头缝里，看不见，抠不出来。铝皮咬手，边没卷好，一拉一道口子。</p>
+<p>我戴上母亲给的那副线手套。厚，扎不进去。</p>
+<p>包一天，胳膊酸，抬不起来。晚上洗手，水上飘着一层灰。</p>
+<p>周三下午跟后勤保障去看现场。</p>
+<p>后勤管台账，管房子、管地、管水电。哪根管子哪一年换过，他们那儿有本子。</p>
+<p>那天看三号楼后头的蒸汽管。管子在半空，包着铝皮，铝皮上刷了漆，漆掉了几块。</p>
+<p>走到跟前，前面几个人停下来对着管子说话。我跟着停下来。</p>
+<p>我母亲站在里头。</p>
+<p>她穿蓝工装，袖口卷起来，胳膊上套着灰的套袖，手里一个本子，翻着。</p>
+<p>她抬头，看见我，说：来了。</p>
+<p>我说：嗯。</p>
+<p>她说：这根八年前换的。</p>
+<p>我说：哦。</p>
+<p>她翻过去一页，指一行给我看。字是她写的，一笔一笔，横平竖直。</p>
+<p>后头他们说管径，说压力，说哪一年做的水压试验。我插不上，站在一边，看她的本子。本子边角卷了，用透明胶粘过。</p>
+<p>散的时候她把本子合上，问：晚上回来吃饭吗。</p>
+<p>我说：科里还有点事。</p>
+<p>她说：哦。</p>
+<p>走出两步，她回过头，从兜里掏出一样东西塞给我。线手套，灰的，跟她胳膊上的套袖一个颜色。</p>
+<p>我说：我有。</p>
+<p>她说：这个厚。</p>
+<p>她把我的手拉过去，套上一只，捏了捏指尖，说：大了。</p>
+<p>我说：我手大。</p>
+<p>她说：嗯。</p>
+<p>另一只也塞给我，转身走了。</p>
+<p>周四下午去研发那边巡线。</p>
+<p>研发楼西边有一截产线，从车间一直过来，隔着一层玻璃。机器一响，玻璃也响。</p>
+<p>我巡到那一段，茶溪从楼里出来。</p>
+<p>他在楼梯口站了一下，把帽子往下拉了拉。</p>
+<p>他这半个月不好看。</p>
+<p>毛一块一块的，深浅不匀，梳也梳不顺，耳朵边上塌下去一片，帽檐压着，压不住。</p>
+<p>他说：你又来了。</p>
+<p>我说：巡线。</p>
+<p>他说：绕过来的吧。</p>
+<p>我说：线就是这么走的。</p>
+<p>他笑了一下，眼睛看别处。他一只手插在兜里，另一只手按着帽檐。</p>
+<p>我说：毛。</p>
+<p>他说：别提。</p>
+<p>他从兜里摸出一小卷胶带，反过来缠在手上，在袖子上按了两下，撕下来对折，塞回兜里。那一面粘了一层。</p>
+<p>我说：粘得下来吗。</p>
+<p>他说：粘不下来。粘下来，明天还有。</p>
+<p>我说：家里呢。</p>
+<p>他说：沙发上有一层。车座缝里也有。</p>
+<p>我说：我那儿有宽的。</p>
+<p>他说：不用。</p>
+<p>我说：柜子里有。</p>
+<p>他说：行吧。</p>
+<p>我说：回去给你拿。</p>
+<p>他说：嗯。</p>
+<p>我走出去几步，他在后头说：哥。</p>
+<p>我回头。</p>
+<p>他说：这半个月你别老从这儿过。</p>
+<p>我说：为什么。</p>
+<p>他说：我这样不好看。</p>
+<p>我说：嗯。</p>
+<p>下一周我还是从那儿过。他也没再提。</p>
+<p>这个月定在二十五号，周二。</p>
+<p>那天上午我走一号楼后头的管廊。管廊靠着车间，中间一道矮墙，墙上一排窗，玻璃上半截刷了白漆。</p>
+<p>窗子里是生产线。人站在线两边，手一直在动。</p>
+<p>我从窗前过去，往里看了一眼。</p>
+<p>这一眼就够。</p>
+<p>方岩在那个线上。</p>
+<p>高中三年，我跟他一个班，高二高三前后桌。</p>
+<p>他成绩不行。班主任念过一次名次，念到他，停了一下，跳过去了。后来他去了大专。</p>
+<p>他的手好。</p>
+<p>高中只有一个地方能动手：通用技术教室。管教室的老师拉了七八个人，放学可以去，做铁皮的东西，剪、折、敲、铆。</p>
+<p>方岩剪得快，我折得齐。一只笔筒他剪筒身，我折底，两只手凑一块，做得比谁都快。交上去的东西，老师留了两件当样品，其中一件是我们的。</p>
+<p>那一段我们两个是和睦的。他叫我名字，不叫别的。</p>
+<p>和睦没维持多久。</p>
+<p>他嘴狠。他给人起外号，起得准，一叫就叫到毕业。他不怕人，谁他都敢说。</p>
+<p>我不还嘴。那时候我不还嘴，也不动手。</p>
+<p>有一回他把我折的底翻过来看，看了两秒，说：外面光，里头糙。</p>
+<p>旁边的人都笑。</p>
+<p>我说：底下看不见。</p>
+<p>他说：看不见的地方才叫手艺。</p>
+<p>这句话我记住了。我到现在画图，看不见的地方也画。</p>
+<p>我低下头，把本子往前翻了一页，快步走过去。</p>
+<p>我不是怕他。我怕的是在车间里。</p>
+<p>车间里有设备，有料，有别的班组的人。真闹起来，两边都赔。</p>
+<p>走到管廊那头我才把本子合上。手心里有汗，纸角被捏软了。</p>
+<p>那天下午要把图送到二号楼。上午巡完线回办公室，我把工装脱了，换了件衬衫。白的，上半年买的，穿着硬。</p>
+<p>换班的时候，我去休息间打水。</p>
+<p>休息间在廊桥那一头。廊桥是铁皮的，走过去响，走快了整座桥都在响。</p>
+<p>我提着杯子出来，正撞上他从桥上过来。</p>
+<p>他不是一个人。后头跟着两个，头发染过，裤子挂在腰上，手插在兜里。</p>
+<p>他没看见我。我先看见他。</p>
+<p>我转身想回办公室。</p>
+<p>他叫了一声。</p>
+<p>他叫的是高中那个叫法，叫到毕业的那个。廊桥上有回声。</p>
+<p>他两步上来，手搭住我的肩，把我转过去。</p>
+<p>我没有挣。转的时候我把杯子换到左手。</p>
+<p>他比我矮半个头，仰起脸看我，从上往下看了一遍，从领子看到鞋。</p>
+<p>他说：你在这儿干？</p>
+<p>我说：嗯。</p>
+<p>他伸手，捏住我衬衫的前襟，提起来一点，跟后头那两个说：你们知道他是谁吗。</p>
+<p>那两个笑，说不认识。</p>
+<p>他就说。</p>
+<p>他说高中的事。说我那时候什么样，说我考多少名，说我被叫到毕业。他说得不错，他说得都对。</p>
+<p>他说一句，那两个笑一声。</p>
+<p>廊桥上有风，铁皮响。</p>
+<p>我耳朵里开始响。手心先热起来。</p>
+<p>我打开他的手。</p>
+<p>然后抓住他工装的前襟，把他按在墙上。</p>
+<p>墙是水泥的，他后背撞上去，响了一声。后头那两个退半步。</p>
+<p>我的右手抬起来，停在半空。</p>
+<p>指甲出来了。</p>
+<p>我又把它放下来。只剩一根食指伸着，指到他眼睛前面，爪尖离他的眼珠子就那么一点。</p>
+<p>我知道它在。我抬起来的时候就拿定了，放下来也是拿定的。我不慌，我看得清他脸上的每一个地方。</p>
+<p>我说：你算个好人。</p>
+<p>他张着嘴。</p>
+<p>我说：你这双手是好手。别往那些不好走的路上走。</p>
+<p>他的眼睛睁着，不动。</p>
+<p>我收回指头，松开他的工装，转身回办公室。</p>
+<p>走出去几步，听见有人吸气。</p>
+<p>杯子里的水洒在手背上，是温的。</p>
+<p>我回到办公室坐下，把手放在桌上。</p>
+<p>指甲缩回去了。指腹上有一道白印，是抓工装抓的。</p>
+<p>办公室有两个人抬头看了一眼，低头继续弄他们的表。</p>
+<p>我坐了一会儿，起来把表填完。</p>
+<p>下午听人说，他们在廊桥上闹，被车间主任撞见，罚了半天工钱。</p>
+<p>又说，他领子上有几个洞。</p>
+<p>有人当笑话讲给我听：你那爪子，够厉害。</p>
+<p>我没笑。我把手插进兜里，摸到母亲那副线手套。</p>
+<p>晚上回家，我把手套戴上。</p>
+<p>厚。戴上摸不出螺栓的纹。</p>
+<p>我坐在床沿上，两只手放在膝盖上，戴着。</p>
+<p>想到他那一双手：锉方块，他锉得比谁都光；锯一条线，锯口比谁都齐。来厂里一个月，产量排在前头，不会的东西一学就会。</p>
+<p>这样的手，本来能攒下东西。</p>
+<p>他领子上四个洞，是我穿的。我记得那一抓的力气。</p>
+<p>我把手套脱下来，放在桌上，两只叠在一起。</p>
+<p>可惜了。</p>
+</article>
+<div class="chapnav">
+  <a href="esrwbw492a60.html">← 四 十月</a>
+  <a href="../../n/y4w3wx63we7q.html">目录</a>
+  <a href="8qpr0x7galsh.html">六 十二月 →</a>
+</div>
+</div></main>
+<footer class="bot"><div class="wrap">
+  静态镜像（电脑关机也能看）· 生成于 2026-11-06 18:34
+</div></footer>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第1节 - 月之暗</title>
+<meta name="description" content="免登录写作，署上你的名字">
+<style>
+:root{color-scheme:light dark;--bg:#fbf9f5;--fg:#1f2328;--dim:#6b7280;--line:#e5e1d8;--card:#fff;--soft:#f3efe7;--accent:#8a5a2b;--danger:#b42318;--ok:#1f7a4d}
+html[data-theme="dark"]{color-scheme:dark;--bg:#14151a;--fg:#e8e6e1;--dim:#9aa0a6;--line:#2b2d33;--card:#1b1d22;--soft:#22252b;--accent:#d8a06a;--danger:#ff8a80;--ok:#63d29a}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]){color-scheme:dark;--bg:#14151a;--fg:#e8e6e1;--dim:#9aa0a6;--line:#2b2d33;--card:#1b1d22;--soft:#22252b;--accent:#d8a06a;--danger:#ff8a80;--ok:#63d29a}}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit;color:inherit}
+.wrap{max-width:1060px;margin:0 auto;padding:0 18px;width:100%}
+header.top{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--line);background:var(--bg)}
+header.top .wrap{display:flex;align-items:center;gap:12px;min-height:60px;padding-top:8px;padding-bottom:8px}
+.brand{font-weight:700;font-size:17px;line-height:1.2;max-width:52vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brand i{display:block;font-style:normal;font-weight:400;font-size:11.5px;color:var(--dim);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+nav.links{margin-left:auto;display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+nav.links a{padding:7px 12px;border-radius:999px;font-size:14px;color:var(--dim);white-space:nowrap}
+nav.links a:hover{background:var(--soft);color:var(--fg)}
+nav.links a.on{background:var(--fg);color:var(--bg)}
+main{flex:1;width:100%;padding:26px 0 60px}
+footer.bot{border-top:1px solid var(--line);padding:22px 0;color:var(--dim);font-size:13px;text-align:center}
+footer.bot a{color:var(--dim);border-bottom:1px dotted var(--line)}
+h1{font-size:26px;line-height:1.3;margin:0 0 10px}
+h2{font-size:17px;margin:34px 0 12px}
+.hero{padding:14px 0 6px}
+.hero h1{font-size:30px;letter-spacing:.5px}
+.hero p{color:var(--dim);margin:6px 0 0;font-size:15px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.spacer{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:14.5px;line-height:1.2;transition:.15s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.pri{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:600}
+.btn.pri:hover{opacity:.88;color:var(--bg)}
+.btn.danger{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 40%,var(--line))}
+.btn.sm{padding:6px 11px;font-size:13px;border-radius:8px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.search{display:flex;gap:8px;margin:20px 0 24px}
+.search input{flex:1;padding:11px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);outline:none}
+.search input:focus{border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px}
+.card{display:block;padding:17px 18px;border:1px solid var(--line);border-radius:14px;background:var(--card);transition:.16s}
+.card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 8px 22px -16px rgba(0,0,0,.4)}
+.card h3{margin:0 0 6px;font-size:17px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .who{color:var(--accent);font-size:13.5px;font-weight:600}
+.card .sum{color:var(--dim);font-size:13.5px;margin:8px 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:22px}
+.card .meta{color:var(--dim);font-size:12.5px;margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+.notice{padding:12px 16px;border-radius:12px;background:var(--soft);border:1px solid var(--line);font-size:14px;color:var(--dim);margin:0 0 22px;white-space:pre-wrap}
+.empty{padding:56px 20px;text-align:center;color:var(--dim);border:1px dashed var(--line);border-radius:16px}
+.empty b{display:block;color:var(--fg);font-size:17px;margin-bottom:6px}
+ul.ch{list-style:none;padding:0;margin:16px 0 0;border-top:1px solid var(--line)}
+ul.ch li{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+ul.ch li span.n{color:var(--dim);font-size:12.5px;min-width:30px;text-align:right;font-variant-numeric:tabular-nums}
+ul.ch li a{flex:1;padding:13px 2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ul.ch li a:hover{color:var(--accent)}
+ul.ch li em{font-style:normal;color:var(--dim);font-size:12.5px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
+.tag{font-size:12px;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--dim);border:1px solid var(--line)}
+article.read{max-width:40em;margin:0 auto;font-family:Georgia,"Noto Serif SC","Songti SC",serif;font-size:19px;line-height:1.95;letter-spacing:.02em}
+article.read h1{font-family:inherit;font-size:22px;margin:0 0 4px}
+article.read .by{color:var(--dim);font-size:14px;margin-bottom:26px;font-family:system-ui,sans-serif}
+article.read p{margin:0 0 1.05em;text-indent:2em;word-break:break-word}
+article.read p.noind{text-indent:0}
+.chapnav{max-width:40em;margin:36px auto 0;display:flex;gap:10px;justify-content:space-between;border-top:1px solid var(--line);padding-top:18px}
+.chapnav a{flex:1;text-align:center;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:14px;background:var(--card)}
+.chapnav a:hover{border-color:var(--accent);color:var(--accent)}
+.chapnav a.off{opacity:.4;pointer-events:none}
+.field{margin:0 0 16px}
+.field label{display:block;font-size:13.5px;color:var(--dim);margin-bottom:6px}
+.field label b{color:var(--danger)}
+.field input,.field textarea{width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:var(--card);outline:none;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--accent)}
+.field .hint{font-size:12.5px;color:var(--dim);margin-top:6px}
+.panel{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:20px;margin:0 0 20px}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:26px;text-align:center;color:var(--dim);background:var(--card);cursor:pointer;transition:.15s}
+.drop:hover,.drop.over{border-color:var(--accent);color:var(--accent);background:var(--soft)}
+.drop b{display:block;color:var(--fg);font-size:16px;margin-bottom:4px}
+.preview{max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:14px}
+.preview table{width:100%;border-collapse:collapse;font-size:13.5px}
+.preview th,.preview td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px}
+.preview th{color:var(--dim);font-weight:500;position:sticky;top:0;background:var(--card)}
+.preview td.n{color:var(--dim);font-variant-numeric:tabular-nums}
+table.admin{width:100%;border-collapse:collapse;font-size:14px}
+table.admin th,table.admin td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+table.admin th{color:var(--dim);font-weight:500;font-size:13px}
+table.admin td.t{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.stat{flex:1;min-width:120px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--card)}
+.stat b{display:block;font-size:22px;line-height:1.2}
+.stat span{color:var(--dim);font-size:12.5px}
+.split{display:grid;grid-template-columns:250px 1fr;gap:18px;align-items:start}
+@media (max-width:780px){.split{grid-template-columns:1fr}}
+.side{border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden;max-height:70vh;overflow-y:auto}
+.side div{padding:9px 13px;font-size:13.5px;border-bottom:1px solid var(--line);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.side div:hover{background:var(--soft)}
+.side div.on{background:var(--fg);color:var(--bg)}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#111;color:#fff;padding:11px 18px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.22s;z-index:99;max-width:88vw}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast.bad{background:#b42318}
+.toast.good{background:#1f7a4d}
+.kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-radius:5px;padding:2px 5px;color:var(--dim)}
+.muted{color:var(--dim);font-size:13.5px}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;background:var(--soft);padding:2px 7px;border-radius:6px;word-break:break-all}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../../index.html">我的小说站<i>免登录写作，署上你的名字</i></a>
+  <nav class="links">
+    <a href="../../index.html" class="">书架</a>
+  </nav>
+</div></header>
+<main><div class="wrap">
+<article class="read">
+  <h1>第1节</h1>
+  <div class="by">星澜雷影 · 1002 字</div>
+<p>月之暗</p>
+<p>—星澜雷影— 5/31 5:09</p>
+<p>雨雾，笼罩着散出虹光的灰色都市，但人视而不见，就如同那恐惧笼罩“对峙时代”</p>
+<p>人类习惯于它。</p>
+<p>洁白圣堂，白色信鸽衔来的绿色橄榄，化为柴火为仇恨燃灭；为真理证明——月之暗，所谓光明，滋暗之处。</p>
+<p>人类出于灭亡的恐惧将滋生一切的“合理”</p>
+<p>行径。</p>
+<p>中东，7号保留地，夕阳下，残破关口，立有数车数剪影。</p>
+<p>于车队末尾。</p>
+<p>“真的要去吗？</p>
+<p>克里斯，此行怕是…</p>
+<p>…</p>
+<p>有些不妥，毕竟他们总是这样…</p>
+<p>这样言行不一。</p>
+<p>”</p>
+<p>泷炎轻叹，担忧地看向远途，影影残月斜挂地平。</p>
+<p>但他感觉自己幼稚得像个孩子一样问出不切实际的问题。</p>
+<p>“哎，炎，你知道这是我的职责，也是我的信条！</p>
+<p>和平总要伴随牺牲，哪怕只有一丝希望，地狱我也是要闯一闯的，况且我的命算什么哈，能救的了一个我就是值了。</p>
+<p>”</p>
+<p>克里斯侧身要了根烟，摆弄着爪子，没去看泷炎。</p>
+<p>“况且，谁知道我们若是不去，他们又会有什么理由，又会有多少炸弹落下，抗争啊，牺牲啊，希望啊，轮回！</p>
+<p>”</p>
+<p>克里斯眼睛怔怔盯着车前窗，耳朵时时抽动，仿佛能看到些什么似的，将烟点着后抽了口。</p>
+<p>“咳，咳咳…</p>
+<p>这玩意，我是一点也不习惯，真不懂有啥好抽的，好了好了，我们还要赶时间，只能走一步算一步咯，或许我们会有些收获呢，炎，再会！</p>
+<p>”</p>
+<p>克里斯拍了拍脑袋故作轻松说，回头瞥了眼泷炎，刚要探出爪示意前车发动。</p>
+<p>“等等…</p>
+<p>”</p>
+<p>泷炎忽的伸爪望向克里斯。</p>
+<p>“嗯，怎么了？</p>
+<p>”</p>
+<p>克里斯回头看向表情复杂的泷炎。</p>
+<p>“嗯…</p>
+<p>吸烟有害健康…</p>
+<p>”</p>
+<p>泷炎伸出的爪终究是收了回去。</p>
+<p>克里斯无奈笑了笑，微微摇了摇头，咧出尖牙回头给了泷炎一个鬼脸，回答道：“好啦，知道啦！</p>
+<p>”</p>
+<p>车窗摇上，车队驶离，扬起无边沙土。</p>
+<p>沙土散尽，带去希望，留下无望希盼。</p>
+<p>泷炎终是没说出口来，我真的舍不得你啊！</p>
+<p>我怎能看着你们一个个奔赴绝地，为什么这一切不是我！</p>
+<p>泷炎瘫倒在沙地上，爪子深深挖入大地，放任愤怒，不甘，悲伤，空虚…</p>
+<p>袭来；放任周遭一切向他压来，挤出几滴仅剩的泪水。</p>
+<p>这样的诀别，业已是第十遍，梦中的无数…</p>
+<p>或许这次将是最后一次…</p>
+<p>夕阳落下，孤云荡过天空，泷炎只影回家，远处秃鹰啄食着腐食，更远处罗恩不知何言以对。</p>
+<p>…</p>
+<p>…</p>
+<p>E42城，无星寂夜，除了单调的流光掠影，周遭一切是这般灰茫茫，分不清是雾霾还是雨雾。</p>
+<p>“这鬼地方死气沉沉的，真想不懂这些激进剿灭主义者哪来的信念和力气。</p>
+<p>”</p>
+<p>克里斯透过窗扫视着单调，重复的建筑，不禁咧咧牙吐槽道。</p>
+<p>E42城，建于高地，由安布雷拉生物制药公司的子集团，月之暗投资建设，而月之暗所秉承的价值正是</p>
+</article>
+<div class="chapnav">
+  <a class="off">已是第一章</a>
+  <a href="../../n/1oq6ynjhs4rd.html">目录</a>
+  <a class="off">已是最后一章</a>
+</div>
+</div></main>
+<footer class="bot"><div class="wrap">
+  静态镜像（电脑关机也能看）· 生成于 2026-11-06 18:34
+</div></footer>
+</body>
+</html>

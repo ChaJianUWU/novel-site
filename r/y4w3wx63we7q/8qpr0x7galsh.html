@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>六 十二月 - 渊</title>
+<meta name="description" content="免登录写作，署上你的名字">
+<style>
+:root{color-scheme:light dark;--bg:#fbf9f5;--fg:#1f2328;--dim:#6b7280;--line:#e5e1d8;--card:#fff;--soft:#f3efe7;--accent:#8a5a2b;--danger:#b42318;--ok:#1f7a4d}
+html[data-theme="dark"]{color-scheme:dark;--bg:#14151a;--fg:#e8e6e1;--dim:#9aa0a6;--line:#2b2d33;--card:#1b1d22;--soft:#22252b;--accent:#d8a06a;--danger:#ff8a80;--ok:#63d29a}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]){color-scheme:dark;--bg:#14151a;--fg:#e8e6e1;--dim:#9aa0a6;--line:#2b2d33;--card:#1b1d22;--soft:#22252b;--accent:#d8a06a;--danger:#ff8a80;--ok:#63d29a}}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit;color:inherit}
+.wrap{max-width:1060px;margin:0 auto;padding:0 18px;width:100%}
+header.top{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--line);background:var(--bg)}
+header.top .wrap{display:flex;align-items:center;gap:12px;min-height:60px;padding-top:8px;padding-bottom:8px}
+.brand{font-weight:700;font-size:17px;line-height:1.2;max-width:52vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brand i{display:block;font-style:normal;font-weight:400;font-size:11.5px;color:var(--dim);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+nav.links{margin-left:auto;display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+nav.links a{padding:7px 12px;border-radius:999px;font-size:14px;color:var(--dim);white-space:nowrap}
+nav.links a:hover{background:var(--soft);color:var(--fg)}
+nav.links a.on{background:var(--fg);color:var(--bg)}
+main{flex:1;width:100%;padding:26px 0 60px}
+footer.bot{border-top:1px solid var(--line);padding:22px 0;color:var(--dim);font-size:13px;text-align:center}
+footer.bot a{color:var(--dim);border-bottom:1px dotted var(--line)}
+h1{font-size:26px;line-height:1.3;margin:0 0 10px}
+h2{font-size:17px;margin:34px 0 12px}
+.hero{padding:14px 0 6px}
+.hero h1{font-size:30px;letter-spacing:.5px}
+.hero p{color:var(--dim);margin:6px 0 0;font-size:15px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.spacer{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:14.5px;line-height:1.2;transition:.15s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.pri{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:600}
+.btn.pri:hover{opacity:.88;color:var(--bg)}
+.btn.danger{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 40%,var(--line))}
+.btn.sm{padding:6px 11px;font-size:13px;border-radius:8px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.search{display:flex;gap:8px;margin:20px 0 24px}
+.search input{flex:1;padding:11px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);outline:none}
+.search input:focus{border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px}
+.card{display:block;padding:17px 18px;border:1px solid var(--line);border-radius:14px;background:var(--card);transition:.16s}
+.card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 8px 22px -16px rgba(0,0,0,.4)}
+.card h3{margin:0 0 6px;font-size:17px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .who{color:var(--accent);font-size:13.5px;font-weight:600}
+.card .sum{color:var(--dim);font-size:13.5px;margin:8px 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:22px}
+.card .meta{color:var(--dim);font-size:12.5px;margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+.notice{padding:12px 16px;border-radius:12px;background:var(--soft);border:1px solid var(--line);font-size:14px;color:var(--dim);margin:0 0 22px;white-space:pre-wrap}
+.empty{padding:56px 20px;text-align:center;color:var(--dim);border:1px dashed var(--line);border-radius:16px}
+.empty b{display:block;color:var(--fg);font-size:17px;margin-bottom:6px}
+ul.ch{list-style:none;padding:0;margin:16px 0 0;border-top:1px solid var(--line)}
+ul.ch li{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+ul.ch li span.n{color:var(--dim);font-size:12.5px;min-width:30px;text-align:right;font-variant-numeric:tabular-nums}
+ul.ch li a{flex:1;padding:13px 2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ul.ch li a:hover{color:var(--accent)}
+ul.ch li em{font-style:normal;color:var(--dim);font-size:12.5px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
+.tag{font-size:12px;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--dim);border:1px solid var(--line)}
+article.read{max-width:40em;margin:0 auto;font-family:Georgia,"Noto Serif SC","Songti SC",serif;font-size:19px;line-height:1.95;letter-spacing:.02em}
+article.read h1{font-family:inherit;font-size:22px;margin:0 0 4px}
+article.read .by{color:var(--dim);font-size:14px;margin-bottom:26px;font-family:system-ui,sans-serif}
+article.read p{margin:0 0 1.05em;text-indent:2em;word-break:break-word}
+article.read p.noind{text-indent:0}
+.chapnav{max-width:40em;margin:36px auto 0;display:flex;gap:10px;justify-content:space-between;border-top:1px solid var(--line);padding-top:18px}
+.chapnav a{flex:1;text-align:center;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:14px;background:var(--card)}
+.chapnav a:hover{border-color:var(--accent);color:var(--accent)}
+.chapnav a.off{opacity:.4;pointer-events:none}
+.field{margin:0 0 16px}
+.field label{display:block;font-size:13.5px;color:var(--dim);margin-bottom:6px}
+.field label b{color:var(--danger)}
+.field input,.field textarea{width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:var(--card);outline:none;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--accent)}
+.field .hint{font-size:12.5px;color:var(--dim);margin-top:6px}
+.panel{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:20px;margin:0 0 20px}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:26px;text-align:center;color:var(--dim);background:var(--card);cursor:pointer;transition:.15s}
+.drop:hover,.drop.over{border-color:var(--accent);color:var(--accent);background:var(--soft)}
+.drop b{display:block;color:var(--fg);font-size:16px;margin-bottom:4px}
+.preview{max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:14px}
+.preview table{width:100%;border-collapse:collapse;font-size:13.5px}
+.preview th,.preview td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px}
+.preview th{color:var(--dim);font-weight:500;position:sticky;top:0;background:var(--card)}
+.preview td.n{color:var(--dim);font-variant-numeric:tabular-nums}
+table.admin{width:100%;border-collapse:collapse;font-size:14px}
+table.admin th,table.admin td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+table.admin th{color:var(--dim);font-weight:500;font-size:13px}
+table.admin td.t{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.stat{flex:1;min-width:120px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--card)}
+.stat b{display:block;font-size:22px;line-height:1.2}
+.stat span{color:var(--dim);font-size:12.5px}
+.split{display:grid;grid-template-columns:250px 1fr;gap:18px;align-items:start}
+@media (max-width:780px){.split{grid-template-columns:1fr}}
+.side{border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden;max-height:70vh;overflow-y:auto}
+.side div{padding:9px 13px;font-size:13.5px;border-bottom:1px solid var(--line);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.side div:hover{background:var(--soft)}
+.side div.on{background:var(--fg);color:var(--bg)}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#111;color:#fff;padding:11px 18px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.22s;z-index:99;max-width:88vw}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast.bad{background:#b42318}
+.toast.good{background:#1f7a4d}
+.kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-radius:5px;padding:2px 5px;color:var(--dim)}
+.muted{color:var(--dim);font-size:13.5px}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;background:var(--soft);padding:2px 7px;border-radius:6px;word-break:break-all}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../../index.html">我的小说站<i>免登录写作，署上你的名字</i></a>
+  <nav class="links">
+    <a href="../../index.html" class="">书架</a>
+  </nav>
+</div></header>
+<main><div class="wrap">
+<article class="read">
+  <h1>六 十二月</h1>
+  <div class="by">茶涧 · 2596 字</div>
+<p>十二月比十一月冷。早上六点四十出门，车把上结了一层霜。戴着手套握不住，摘了，手贴在车把上，白得没有血色，得先在裤子上搓两把。</p>
+<p>车棚的铁皮上也结了霜。车锁冻住了一回，钥匙拧了两下才开。</p>
+<p>车间里比外头暖。管子上结霜，摸上去是硬的，霜一化，底下的漆是湿的。栏杆里头一排机器人，隔着玻璃，一道一道地转。</p>
+<p>线边上的 AGV 一天跑个不停，扁的一台，顶着料箱，顺着地上的线走，人站在前头它就停。车间里不叫 AGV，叫小车。</p>
+<p>四条线照旧走，一天七千步。下午画图。</p>
+<p>年底的报表多一栏“结转”，我照着去年的填。去年的字是别人的，比我写得圆。系统里点两下就生成了，可我照旧要在纸上签一个名。</p>
+<p>库房盘点，跟着数了两天料。料架上贴的签子一半是旧的，编号对不上，拿手机扫也扫不出来，我拿笔改。看库的老太太说，这些签子比你的岁数大。</p>
+<p>母亲打电话问过年回不回去。我说回。她说过年那天早点。我说嗯。</p>
+<p>十号前后，茶溪的毛长齐了。帽子不往下按了，耳朵边那一片也平了。食堂里他把帽子摘下来放在桌上：长齐了。我说：嗯。</p>
+<p>十二号下午，任老把上高的单子发下来。任老是我们这摊的组长。厂房在厂区最东头，自动化那条线，单层，屋面斜上去，不高。屋面上一排避雷针，两台风机塔。任老说：矮是矮，斜面，脚底下自己当心。</p>
+<p>十五号早上七点半集合。绳从屋面那头拉过来，隔一段一个卡子，人过卡子得把钩摘了再挂，挂的时候绳上只能有一个人。所以只能一个一个上。</p>
+<p>这根绳上个月就拉好了。谁拉的，谁验的，我不知道。记录在办公室的夹子里，签的是上一组的名字，我翻过一眼：一切正常。</p>
+<p>梯子是铁梯，靠在檐口上，接头处拿铁丝绑了两道。绳子有一头从檐口垂下来，我在梯子底下就挂上了。任老说：你头一个。</p>
+<p>我把钩挂上，爬一段，摘钩，把钩挂到前头，再爬。梯子冷，手心贴久了，粘在铁上。</p>
+<p>到檐口翻上去，站起来。屋面在脚底下响了一声。</p>
+<p>我按住对讲：看得见，没有挡的。上。</p>
+<p>一个一个上来。上来一个，站在檐口等我招手；我招手，他往上走。五个人，半个钟头。最后一个上来，喘，说这梯子滑。</p>
+<p>人齐了，我往上走。斜屋面走横不走竖，脚踩在瓦楞的凸起上，一步一步。</p>
+<p>第一个检查点是避雷针。针脚四个，我抹一把，锈是浮的，沾在指头上。第二台风机塔，塔脚一圈防水胶，胶没裂。我在本子上画一个钩。</p>
+<p>第三个检查点在一根短柱上。生命线的一头固定在这根柱子的底板上，底板四角四个螺栓。</p>
+<p>我蹲下去看。底板上有一片锈，锈是鼓的，边上起了皮，指甲一抠，掉下来一块，底下是暗的。螺帽也锈，锈进了丝扣。</p>
+<p>我按住对讲：这段有生锈，报一下。上周另一组来看过没有。</p>
+<p>对讲里有声音：没有。上周的记录我看过，一切正常。</p>
+<p>我又看了一遍那片锈。风从坡上过来，把帽带吹起来一下，打在耳朵上。</p>
+<p>我把前端挂到下一个卡子上，钩子挂好，锁门拧到底。柱子在左边，我从柱子和檐口中间跨过去，那边还有一个点。</p>
+<p>我抬脚。</p>
+<p>响了一声。</p>
+<p>底板从柱子上撕下来。四个螺栓是打在瓦楞板底下的檩条上的，底板连着檩条，檩条连着板，一起撕下来。绳松了一截。屋面在我脚底下塌下去一块，我从那个口子里下去。</p>
+<p>钩子还在绳上。</p>
+<p>我吊在厂房里头。离地两米多。正面朝上。尾巴在下面垂着，风从破口下来，尾巴摆一下，又摆一下。</p>
+<p>帽子还在头上，带子勒着下巴。耳机还在右耳上，对讲的线从吊带底下拉直了。</p>
+<p>我抬头。破口边上站着跟上来那个，两只手抓着檐口，脸朝下看我。他往下伸了一只手。</p>
+<p>任老在底下喊：别动！别松手！</p>
+<p>那只手又收回去了。</p>
+<p>我偏头往下看。底下是车间的地，一排没装完的机架，几个穿蓝工装的站在机架那头，把两个包装箱推过来，堆在我底下。箱子上印着“向上”和两个黑箭头，摆在水泥地上。</p>
+<p>任老站在机架旁边，一只手举着，不知道是要接还是要拦。</p>
+<p>我按住对讲：现在怎么办。</p>
+<p>没有人应。</p>
+<p>我又按：还上报吗。</p>
+<p>任老没说话。他的脸黑下去一截。我不知道是因为我做错了什么，还是因为上周那张表。</p>
+<p>他抬起手朝机架那头喊：把小车调过来。</p>
+<p>两台小车自己拐过来，并排停在我脚底下，中间顶着一摞空托盘。托盘一格一格往上升，顶到我鞋底。</p>
+<p>我踩上去。绳还绷着，人往下坠了一点，腰封勒住，腰上那道旧印子又压出来。两个人踩着机架爬上来，一人抓住我一边的腰封。</p>
+<p>我摸背后的锁门。手是抖的，摸了两回才摸到。解开的时候人往下一沉，落在托盘上。</p>
+<p>脚沾着地。手心一层汗，是凉的。托盘上踩了两个灰印子。</p>
+<p>任老没叫我走。他把上周那组叫了过来。</p>
+<p>这段屋面，谁看的。</p>
+<p>一个人往前走半步：我看的。</p>
+<p>记录上写的什么。</p>
+<p>他说：不见明显锈蚀痕迹。</p>
+<p>任老说：一周。没下雨，没太阳，没返潮。你给我锈一个看看。</p>
+<p>那个人不说话。</p>
+<p>任老说：这不是看漏。这是写出来的。表是给人看的，人是上去的。</p>
+<p>安环科来了两个人，照相，量了底板，把断下来的那块装进袋子带走。走的时候其中一个人回头看了我一眼，没说话。</p>
+<p>我走到他们那几个人的右前方，在水泥地上坐下。</p>
+<p>他们看我，我看他们。谁也没说话。有人把手插在兜里，有人抬头看屋面那个破口。</p>
+<p>我不知道他们在想什么。他们也不知道我在想什么。</p>
+<p>下午我一个人回办公室填当天的表。表是无碳复写的，三联，最底下一张颜色最淡，写的时候笔尖把纸按出印子。第三栏写：连接件断裂，屋面塌陷，人未伤。备注那栏空着，我看了半天，没写。</p>
+<p>第二天中午在食堂，茶溪端着盘子过来：听说你们那屋面塌了。</p>
+<p>我说：嗯。</p>
+<p>他说：人呢。</p>
+<p>我说：没事。</p>
+<p>他把盘子放下，坐下，吃了一口：你们那绳，挂哪儿的。</p>
+<p>我说：柱子。</p>
+<p>他没再问。</p>
+<p>剩下的半个月，那段屋面围了起来，檐口上挂一块牌子，四个字：禁止上人。屋面没修，只围起来。巡检的表照填，第三行我每次都写“已围挡”。</p>
+<p>二十五号下班在车棚，碰见破口边上伸过手的那个。他低着头开锁，钥匙插了两次才开。我推车出去。谁也没提。</p>
+<p>月底交试用期的表。自己那一栏写了两行，撕了重写。组长签字那栏，任老看了半天，签了。</p>
+<p>到了一月，厂房重修。</p>
+<p>屋面全换了，颜色比原来的深。生命线的固定点重新做过，每根柱子上四个膨胀螺栓，螺帽上划一道漆线。</p>
+<p>破口底下那排机架装完了，在转。小车从底下穿过去，两边让得很宽。</p>
+<p>我又上去看了一趟。蹲下看第三个点。漆没干透，我用指头按了一下。</p>
+<p>指头上沾了一点漆，指甲缝里也是。</p>
+</article>
+<div class="chapnav">
+  <a href="eqv1x655twvs.html">← 五 十一月</a>
+  <a href="../../n/y4w3wx63we7q.html">目录</a>
+  <a href="ypqtma2lot0w.html">七 一月 →</a>
+</div>
+</div></main>
+<footer class="bot"><div class="wrap">
+  静态镜像（电脑关机也能看）· 生成于 2026-11-06 18:34
+</div></footer>
+</body>
+</html>

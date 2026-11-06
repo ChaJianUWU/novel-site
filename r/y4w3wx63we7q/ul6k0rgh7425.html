@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>八 过年 - 渊</title>
+<meta name="description" content="免登录写作，署上你的名字">
+<style>
+:root{color-scheme:light dark;--bg:#fbf9f5;--fg:#1f2328;--dim:#6b7280;--line:#e5e1d8;--card:#fff;--soft:#f3efe7;--accent:#8a5a2b;--danger:#b42318;--ok:#1f7a4d}
+html[data-theme="dark"]{color-scheme:dark;--bg:#14151a;--fg:#e8e6e1;--dim:#9aa0a6;--line:#2b2d33;--card:#1b1d22;--soft:#22252b;--accent:#d8a06a;--danger:#ff8a80;--ok:#63d29a}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]){color-scheme:dark;--bg:#14151a;--fg:#e8e6e1;--dim:#9aa0a6;--line:#2b2d33;--card:#1b1d22;--soft:#22252b;--accent:#d8a06a;--danger:#ff8a80;--ok:#63d29a}}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit;color:inherit}
+.wrap{max-width:1060px;margin:0 auto;padding:0 18px;width:100%}
+header.top{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--line);background:var(--bg)}
+header.top .wrap{display:flex;align-items:center;gap:12px;min-height:60px;padding-top:8px;padding-bottom:8px}
+.brand{font-weight:700;font-size:17px;line-height:1.2;max-width:52vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brand i{display:block;font-style:normal;font-weight:400;font-size:11.5px;color:var(--dim);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+nav.links{margin-left:auto;display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+nav.links a{padding:7px 12px;border-radius:999px;font-size:14px;color:var(--dim);white-space:nowrap}
+nav.links a:hover{background:var(--soft);color:var(--fg)}
+nav.links a.on{background:var(--fg);color:var(--bg)}
+main{flex:1;width:100%;padding:26px 0 60px}
+footer.bot{border-top:1px solid var(--line);padding:22px 0;color:var(--dim);font-size:13px;text-align:center}
+footer.bot a{color:var(--dim);border-bottom:1px dotted var(--line)}
+h1{font-size:26px;line-height:1.3;margin:0 0 10px}
+h2{font-size:17px;margin:34px 0 12px}
+.hero{padding:14px 0 6px}
+.hero h1{font-size:30px;letter-spacing:.5px}
+.hero p{color:var(--dim);margin:6px 0 0;font-size:15px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.spacer{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:14.5px;line-height:1.2;transition:.15s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.pri{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:600}
+.btn.pri:hover{opacity:.88;color:var(--bg)}
+.btn.danger{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 40%,var(--line))}
+.btn.sm{padding:6px 11px;font-size:13px;border-radius:8px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.search{display:flex;gap:8px;margin:20px 0 24px}
+.search input{flex:1;padding:11px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);outline:none}
+.search input:focus{border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px}
+.card{display:block;padding:17px 18px;border:1px solid var(--line);border-radius:14px;background:var(--card);transition:.16s}
+.card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 8px 22px -16px rgba(0,0,0,.4)}
+.card h3{margin:0 0 6px;font-size:17px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .who{color:var(--accent);font-size:13.5px;font-weight:600}
+.card .sum{color:var(--dim);font-size:13.5px;margin:8px 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:22px}
+.card .meta{color:var(--dim);font-size:12.5px;margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+.notice{padding:12px 16px;border-radius:12px;background:var(--soft);border:1px solid var(--line);font-size:14px;color:var(--dim);margin:0 0 22px;white-space:pre-wrap}
+.empty{padding:56px 20px;text-align:center;color:var(--dim);border:1px dashed var(--line);border-radius:16px}
+.empty b{display:block;color:var(--fg);font-size:17px;margin-bottom:6px}
+ul.ch{list-style:none;padding:0;margin:16px 0 0;border-top:1px solid var(--line)}
+ul.ch li{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+ul.ch li span.n{color:var(--dim);font-size:12.5px;min-width:30px;text-align:right;font-variant-numeric:tabular-nums}
+ul.ch li a{flex:1;padding:13px 2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ul.ch li a:hover{color:var(--accent)}
+ul.ch li em{font-style:normal;color:var(--dim);font-size:12.5px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
+.tag{font-size:12px;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--dim);border:1px solid var(--line)}
+article.read{max-width:40em;margin:0 auto;font-family:Georgia,"Noto Serif SC","Songti SC",serif;font-size:19px;line-height:1.95;letter-spacing:.02em}
+article.read h1{font-family:inherit;font-size:22px;margin:0 0 4px}
+article.read .by{color:var(--dim);font-size:14px;margin-bottom:26px;font-family:system-ui,sans-serif}
+article.read p{margin:0 0 1.05em;text-indent:2em;word-break:break-word}
+article.read p.noind{text-indent:0}
+.chapnav{max-width:40em;margin:36px auto 0;display:flex;gap:10px;justify-content:space-between;border-top:1px solid var(--line);padding-top:18px}
+.chapnav a{flex:1;text-align:center;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:14px;background:var(--card)}
+.chapnav a:hover{border-color:var(--accent);color:var(--accent)}
+.chapnav a.off{opacity:.4;pointer-events:none}
+.field{margin:0 0 16px}
+.field label{display:block;font-size:13.5px;color:var(--dim);margin-bottom:6px}
+.field label b{color:var(--danger)}
+.field input,.field textarea{width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:var(--card);outline:none;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--accent)}
+.field .hint{font-size:12.5px;color:var(--dim);margin-top:6px}
+.panel{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:20px;margin:0 0 20px}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:26px;text-align:center;color:var(--dim);background:var(--card);cursor:pointer;transition:.15s}
+.drop:hover,.drop.over{border-color:var(--accent);color:var(--accent);background:var(--soft)}
+.drop b{display:block;color:var(--fg);font-size:16px;margin-bottom:4px}
+.preview{max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:14px}
+.preview table{width:100%;border-collapse:collapse;font-size:13.5px}
+.preview th,.preview td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px}
+.preview th{color:var(--dim);font-weight:500;position:sticky;top:0;background:var(--card)}
+.preview td.n{color:var(--dim);font-variant-numeric:tabular-nums}
+table.admin{width:100%;border-collapse:collapse;font-size:14px}
+table.admin th,table.admin td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+table.admin th{color:var(--dim);font-weight:500;font-size:13px}
+table.admin td.t{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.stat{flex:1;min-width:120px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--card)}
+.stat b{display:block;font-size:22px;line-height:1.2}
+.stat span{color:var(--dim);font-size:12.5px}
+.split{display:grid;grid-template-columns:250px 1fr;gap:18px;align-items:start}
+@media (max-width:780px){.split{grid-template-columns:1fr}}
+.side{border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden;max-height:70vh;overflow-y:auto}
+.side div{padding:9px 13px;font-size:13.5px;border-bottom:1px solid var(--line);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.side div:hover{background:var(--soft)}
+.side div.on{background:var(--fg);color:var(--bg)}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#111;color:#fff;padding:11px 18px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.22s;z-index:99;max-width:88vw}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast.bad{background:#b42318}
+.toast.good{background:#1f7a4d}
+.kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-radius:5px;padding:2px 5px;color:var(--dim)}
+.muted{color:var(--dim);font-size:13.5px}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;background:var(--soft);padding:2px 7px;border-radius:6px;word-break:break-all}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../../index.html">我的小说站<i>免登录写作，署上你的名字</i></a>
+  <nav class="links">
+    <a href="../../index.html" class="">书架</a>
+  </nav>
+</div></header>
+<main><div class="wrap">
+<article class="read">
+  <h1>八 过年</h1>
+  <div class="by">茶涧 · 3976 字</div>
+<p>腊月二十四，门口搁着一个纸箱。</p>
+<p>胶带缠了三道，上面写的是母亲的名字，字歪，横不平。</p>
+<p>拆开是一袋红薯干，一罐辣椒酱，一双棉鞋。鞋底是纳的，针脚一行一行，纳得密，线是白的。</p>
+<p>箱子底下压着一张纸，四个字：给涧涧的。</p>
+<p>母亲把鞋拿出来，让我试。我坐在沙发上试。正好。</p>
+<p>她说：正好。</p>
+<p>她打电话过去。那头声音大，隔着听筒也听得见。母亲说今年先在那边过，初几再看。那头说，行，给你留一只鸡，初二来，来了就杀。</p>
+<p>母亲说：看吧。</p>
+<p>挂了电话，她在厨房站了一会儿。水龙头开着，水一直流。</p>
+<p>父亲二十八回来的。行李放在门口，先洗手。吃饭的时候他说：今年回老家。</p>
+<p>母亲说：嗯。</p>
+<p>他说的是老家。老家不通高铁，得坐一夜火车。</p>
+<p>第二天老家来电话，是姑姑。她问几号到。母亲说十五的夜车，十六早上到。姑姑说到了帮我一把，今年人多。</p>
+<p>母亲说：好。</p>
+<p>两通电话隔了一天。我都在旁边。</p>
+<p>米和油还在门里头，袋子底下垫着报纸，报纸边上落了一点灰。</p>
+<p>十五号早上七点二十的车。母亲四点就起来了，煮了八个鸡蛋，装在一个网兜里，让我拿着。</p>
+<p>车站的人比我想的多。扛编织袋的，抱小孩的，蹲在墙根吃泡面的。硬卧车厢里一股脚味和橘子皮味。</p>
+<p>我把箱子举上架子。母亲在下铺，把外衣叠好当枕头。她说：睡吧。</p>
+<p>她先睡着了。</p>
+<p>对面铺上一个女人嗑瓜子，嗑一路，壳放在一张纸上，攒成一小堆。</p>
+<p>十六号早上到县城。站前下过雨，地是湿的，凹下去的地方汪着水，鞋底带起一层泥。</p>
+<p>面包车进村二十分钟。路两边是平房，瓦是灰的，瓦缝里长着草，烟囱里冒白气。</p>
+<p>老家的门是两扇，红漆掉了，露出底下的木头。门框上贴着春联，一层压一层——今年的还没贴，往年的都还在，底下那层红得发黑，字看不清了。</p>
+<p>屋里比外头暖不了多少。母亲一进门就系围裙，进了灶屋。</p>
+<p>堂屋里坐着两个表姐。大的在读研，戴眼镜；小的在城里上班，头发剪得短。</p>
+<p>小的往边上挪了挪，说：坐。</p>
+<p>我坐下。她说：冷不冷。</p>
+<p>我说：不冷。</p>
+<p>她看了我一眼，笑了一下：你这一身，是不用怕冷。</p>
+<p>她把橘子递过来，一整个，没剥。</p>
+<p>年饭摆两张桌，大人在堂屋，小辈在旁边屋。母亲在灶屋和堂屋之间走，端菜。</p>
+<p>姑姑说：嫂子你也坐，别忙了。</p>
+<p>母亲说：还有两个菜。</p>
+<p>我坐在她旁边。桌上有鱼，有鸡，有一碗丸子。电视开着，声音比人声大。</p>
+<p>姑姑剥了个橘子，一瓣一瓣掰开，摆在桌上。</p>
+<p>她说：我们家那个，今年考上了，事业单位，铁饭碗。她说到这里停了一下，把一瓣橘子放进嘴里，嚼完才说：你们家这个，念了那么多年，最后爬架子。</p>
+<p>父亲低头，在剥一颗花生。</p>
+<p>姑姑说：也不是我说，读书读到那个份上，图什么呢。</p>
+<p>大的表姐说：姑，架子也得有人爬。</p>
+<p>姑姑没接她的话。</p>
+<p>小的表姐说：你在厂里做什么。</p>
+<p>我说：爬架子。</p>
+<p>她说：多高。</p>
+<p>我说：三十米。</p>
+<p>她挑起眉毛：吓人。</p>
+<p>姑姑把橘子皮放在桌上，说：这孩子从小就跟别人家的不一样。</p>
+<p>桌上的鱼没动。父亲的筷子停了一下，又夹了一颗花生。</p>
+<p>母亲站起来，收自己那碗。收着收着手抖了一下，碗沿碰在另一只碗上，响了一声。</p>
+<p>她把碗放在灶屋，出去了。</p>
+<p>院子里有炮仗味，是隔壁放的。天已经黑了，墙头是湿的，砖缝里的水泛着一点光。</p>
+<p>母亲站在墙根，手在围裙上擦。擦完才抬手抹眼睛。</p>
+<p>我说：回去。</p>
+<p>她说：没事。</p>
+<p>我说：她凭什么。</p>
+<p>她说：她那张嘴，说了三十年了。</p>
+<p>我说：那也不能这么说。</p>
+<p>她说：别进去。过年。</p>
+<p>屋里电视在响，笑声一阵一阵的，是晚会。</p>
+<p>我说：我进去了。</p>
+<p>她说：进去吃饭。</p>
+<p>门没关严，留着一条缝。我站在缝外头。</p>
+<p>姑姑的声音从里头出来。她说：你弟弟这辈子就这样了，你也别指望。</p>
+<p>父亲没说话。</p>
+<p>她说：一家子都这样。她那个样，你这个样，养出来的儿子也这样。</p>
+<p>有人劝了一句，声音小，听不清。姑姑说：我说错了？我说错了吗。</p>
+<p>我听见碗碰了一下，很轻。</p>
+<p>母亲的手从我胳膊上松开。</p>
+<p>我进屋。</p>
+<p>姑姑看见我，话没停。她抬起下巴，还在说：我说的都是实话，这屋里谁不知道。</p>
+<p>我走到桌边。</p>
+<p>她仰起脸。</p>
+<p>我扇了一下。掌根落在她左脸上。</p>
+<p>眼镜滑到鼻尖。她没倒，手撑在桌沿，一只碗歪了，汤洒出来一点。</p>
+<p>一桌静了。电视还在响，一个女的在笑。</p>
+<p>我指着她。</p>
+<p>我说：我在厂里面算是个技术人员，比你那个铁饭碗的文职强多了。我也为人民服务，我也会当文职。不至于被你这个人嚼舌根。</p>
+<p>她一只手还撑着桌沿，眼镜没推上去。</p>
+<p>我低头看自己的手。手在抖，不是疼，是自己抖。</p>
+<p>父亲没有说话。他看桌上那盘鱼。</p>
+<p>姑父站起来，椅子腿在地上刮了一声。他绕过桌子，走过来，伸手推我胸口。</p>
+<p>我脚下退了一步，捉住他的领子。</p>
+<p>他比我矮半个头，下巴抬起来，喉结在动。</p>
+<p>我把另一只手抬起来，爪张开，停在他脸前面。</p>
+<p>不落。</p>
+<p>我说：你是知道我的，你也看得到。</p>
+<p>他喉咙响了一下，没说话。他的手还搭在我胸口，不敢动。</p>
+<p>父亲说：松手。</p>
+<p>我松了。看了父亲一眼。</p>
+<p>父亲没看我。</p>
+<p>我说：走吧。</p>
+<p>我出去拉母亲。</p>
+<p>小的表姐追到院门口，把母亲的外套递出来。她什么也没说。我接了。</p>
+<p>母亲在院门外站着，我把外套给她披上。她往袖子里伸手，伸了两回才伸进去。</p>
+<p>面包车是表姐叫的。到镇上四十，到市里一百二。我说到市里。</p>
+<p>车里有暖气，开得很大。司机放晚会，声音关小了。路上没有车，雨在灯里像灰。</p>
+<p>过了一个隧道，母亲说：你这一下，以后怎么见面。</p>
+<p>我说：不见了。</p>
+<p>她没再说话，把脸转向窗子。</p>
+<p>到市里的站九点多。除夕的候车厅里没几个人，检票的打了一个哈欠。</p>
+<p>我在手机上买票，两张。八点四十的，还有座。</p>
+<p>车上一半是空的。母亲靠着窗睡着了，头一点一点，磕在玻璃上。</p>
+<p>到家十点多。屋里的样子还是走的时候的样子。母亲进门先去烧水。</p>
+<p>初一早上，父亲回来了。</p>
+<p>他自己坐车回来的。进门换鞋，把外套挂在门后，一句话没说。</p>
+<p>母亲下了一碗面，卧了一个蛋。他吃了，吃得很慢。</p>
+<p>吃完把碗放进水池，回屋睡了。</p>
+<p>我在客厅坐着。电视开着，声音很小。挂历挂在门后，二月那一页红得多。</p>
+<p>母亲说：初二走。</p>
+<p>我说：嗯。</p>
+<p>机票是初一晚上买的，比平时贵一半。</p>
+<p>母亲说：太贵。</p>
+<p>我说：坐了。</p>
+<p>她说：坐火车也行。</p>
+<p>我说：坐了。</p>
+<p>她收拾东西，把柜子里那袋没拆的红薯干又放回去，说：回来再吃。</p>
+<p>母亲是头一回坐飞机。起飞的时候她抓着扶手，指甲盖有点白。</p>
+<p>我把窗板拉起来，让她看外面。</p>
+<p>她说：这么高。</p>
+<p>云上头有太阳，云是平的，一直铺到边上。</p>
+<p>落地的时候是下午。出口外面有人喊：姐。</p>
+<p>舅舅开了一辆面包车来，后座上放着两箱东西。他一把接过母亲手里的包，说：瘦了。</p>
+<p>母亲笑了。</p>
+<p>这一路她第一次笑。</p>
+<p>从机场到村里一个多小时。路两边雪厚，田里的垄都平了，白皑皑一片，没有边。</p>
+<p>进村的时候天快黑了，家家门口都挂着灯。</p>
+<p>院门口有人等着，外婆站在最前面，围裙上还有面。</p>
+<p>她拉住我的手。她比我记得的矮。</p>
+<p>她说：瘦了。</p>
+<p>我说：胖了。</p>
+<p>她说：胖了。她笑，笑得眼睛都挤没了。</p>
+<p>表弟从屋里出来，比我矮，看见我就站住了。他说：哥，我能摸一下吗。</p>
+<p>我说：摸。</p>
+<p>他摸我的胳膊，摸了半天，说：真的。</p>
+<p>他又去摸我的角，一个环一个环地数。他数了两遍。</p>
+<p>他说：数不清。</p>
+<p>表妹在旁边推他：没礼貌。</p>
+<p>我说：没事。我把尾巴甩了一下，扫在他腿上。</p>
+<p>他跳起来，笑得直不起腰。</p>
+<p>年饭在晚上。菜多半是自家种的，白菜、萝卜，一盆炖肉，一盘粉条。</p>
+<p>舅舅说：肉是前天才杀的，你妈说你不吃肥的。</p>
+<p>我说：吃的。</p>
+<p>他说：那就好。</p>
+<p>母亲在灶屋和堂屋之间走，端菜，跟人说话，声音比在这边高。</p>
+<p>夜里九点多，舅舅说：还有一锅。</p>
+<p>是一锅豆腐脑。舅妈盛出来，浇了一勺辣子，端到我面前。</p>
+<p>我说：这会儿还做这个。</p>
+<p>舅妈说：本来早上做，你妈说你晚上吃，就留到晚上了。</p>
+<p>我说：我没说过。</p>
+<p>舅妈说：你妈说的。</p>
+<p>母亲在旁边低头喝汤。</p>
+<p>豆腐脑盛在粗瓷碗里，热，滑。我吃了两碗。</p>
+<p>外婆坐在对面看我吃，说：还吃不吃。</p>
+<p>我说：吃。</p>
+<p>她说：锅里还有。</p>
+<p>这边能放炮仗。家里那边禁了好几年，我上一次放还是上小学。</p>
+<p>表弟把一挂鞭拆开，一个一个分给我们。表妹不敢点，把香递给我。</p>
+<p>雪地上炸出一片红纸屑，风一吹，往墙根跑。</p>
+<p>我蹲下捡了一个没炸的，捻子还在。</p>
+<p>表弟说：给我。</p>
+<p>我说：这个留着。</p>
+<p>玩到天黑，手先冷，然后是脚。表弟的鼻尖红了，说话开始带鼻音。</p>
+<p>回屋烤炉子。铁炉子，炉盘上烤着花生，一圈人坐着，手上都是灰，谁也不说话，光听炉子里响。</p>
+<p>外婆家的猫从炕上跳下来，先闻了我的尾巴，后来就趴在我腿上睡了。它打呼噜，声音不大。</p>
+<p>有人说：你这一身，冬天不怕冷吧。</p>
+<p>我说：这么厚还是有肉的，不全是毛。</p>
+<p>一屋人笑。表弟笑得最响，笑完还要再说一遍。</p>
+<p>我的手机在膝上亮了一下。老家群里表哥发了一张照片，一个字没写。</p>
+<p>他们那边换了一张桌布。八个碗摆得整整齐齐，少了三个人的位子，也没人挪一下。</p>
+<p>我把手机翻过去，扣在腿上。</p>
+<p>猫在我腿上翻了个身。</p>
+<p>初六走。飞机是下午的。</p>
+<p>头一天晚上外婆就开始装东西。馍、粉条、一罐辣子、一袋红薯干、两块腊肉、一兜冻着的饺子，用塑料袋裹了三层。</p>
+<p>我说：装不下了。</p>
+<p>她说：装得下。</p>
+<p>那个纸箱是装过洗衣机的，箱底还带着泥。她拿记号笔在侧面写字，写不好，让舅舅写。</p>
+<p>舅舅写了两个字：涧涧。</p>
+<p>机场人很多。舅舅把箱子搬到托运口，说：这个不能压。</p>
+<p>我抱着箱子站了一会儿，箱子不重，抱起来有点冰。</p>
+<p>过安检的时候，箱子放在传送带上。</p>
+<p>箱底的泥在带子上蹭出一道土印，一直跟进去。</p>
+<p>母亲回头。外婆还站在线外面，举着一只手。</p>
+<p>我也举了一下。</p>
+<p>箱子进去了。</p>
+</article>
+<div class="chapnav">
+  <a href="ypqtma2lot0w.html">← 七 一月</a>
+  <a href="../../n/y4w3wx63we7q.html">目录</a>
+  <a class="off">已是最后一章</a>
+</div>
+</div></main>
+<footer class="bot"><div class="wrap">
+  静态镜像（电脑关机也能看）· 生成于 2026-11-06 18:34
+</div></footer>
+</body>
+</html>

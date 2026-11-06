@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>六 锉 - 渊</title>
+<meta name="description" content="免登录写作，署上你的名字">
+<style>
+:root{color-scheme:light dark;--bg:#fbf9f5;--fg:#1f2328;--dim:#6b7280;--line:#e5e1d8;--card:#fff;--soft:#f3efe7;--accent:#8a5a2b;--danger:#b42318;--ok:#1f7a4d}
+html[data-theme="dark"]{color-scheme:dark;--bg:#14151a;--fg:#e8e6e1;--dim:#9aa0a6;--line:#2b2d33;--card:#1b1d22;--soft:#22252b;--accent:#d8a06a;--danger:#ff8a80;--ok:#63d29a}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]){color-scheme:dark;--bg:#14151a;--fg:#e8e6e1;--dim:#9aa0a6;--line:#2b2d33;--card:#1b1d22;--soft:#22252b;--accent:#d8a06a;--danger:#ff8a80;--ok:#63d29a}}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit;color:inherit}
+.wrap{max-width:1060px;margin:0 auto;padding:0 18px;width:100%}
+header.top{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--line);background:var(--bg)}
+header.top .wrap{display:flex;align-items:center;gap:12px;min-height:60px;padding-top:8px;padding-bottom:8px}
+.brand{font-weight:700;font-size:17px;line-height:1.2;max-width:52vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brand i{display:block;font-style:normal;font-weight:400;font-size:11.5px;color:var(--dim);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+nav.links{margin-left:auto;display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+nav.links a{padding:7px 12px;border-radius:999px;font-size:14px;color:var(--dim);white-space:nowrap}
+nav.links a:hover{background:var(--soft);color:var(--fg)}
+nav.links a.on{background:var(--fg);color:var(--bg)}
+main{flex:1;width:100%;padding:26px 0 60px}
+footer.bot{border-top:1px solid var(--line);padding:22px 0;color:var(--dim);font-size:13px;text-align:center}
+footer.bot a{color:var(--dim);border-bottom:1px dotted var(--line)}
+h1{font-size:26px;line-height:1.3;margin:0 0 10px}
+h2{font-size:17px;margin:34px 0 12px}
+.hero{padding:14px 0 6px}
+.hero h1{font-size:30px;letter-spacing:.5px}
+.hero p{color:var(--dim);margin:6px 0 0;font-size:15px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.spacer{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:14.5px;line-height:1.2;transition:.15s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.pri{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:600}
+.btn.pri:hover{opacity:.88;color:var(--bg)}
+.btn.danger{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 40%,var(--line))}
+.btn.sm{padding:6px 11px;font-size:13px;border-radius:8px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.search{display:flex;gap:8px;margin:20px 0 24px}
+.search input{flex:1;padding:11px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);outline:none}
+.search input:focus{border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px}
+.card{display:block;padding:17px 18px;border:1px solid var(--line);border-radius:14px;background:var(--card);transition:.16s}
+.card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 8px 22px -16px rgba(0,0,0,.4)}
+.card h3{margin:0 0 6px;font-size:17px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .who{color:var(--accent);font-size:13.5px;font-weight:600}
+.card .sum{color:var(--dim);font-size:13.5px;margin:8px 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:22px}
+.card .meta{color:var(--dim);font-size:12.5px;margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+.notice{padding:12px 16px;border-radius:12px;background:var(--soft);border:1px solid var(--line);font-size:14px;color:var(--dim);margin:0 0 22px;white-space:pre-wrap}
+.empty{padding:56px 20px;text-align:center;color:var(--dim);border:1px dashed var(--line);border-radius:16px}
+.empty b{display:block;color:var(--fg);font-size:17px;margin-bottom:6px}
+ul.ch{list-style:none;padding:0;margin:16px 0 0;border-top:1px solid var(--line)}
+ul.ch li{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+ul.ch li span.n{color:var(--dim);font-size:12.5px;min-width:30px;text-align:right;font-variant-numeric:tabular-nums}
+ul.ch li a{flex:1;padding:13px 2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ul.ch li a:hover{color:var(--accent)}
+ul.ch li em{font-style:normal;color:var(--dim);font-size:12.5px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
+.tag{font-size:12px;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--dim);border:1px solid var(--line)}
+article.read{max-width:40em;margin:0 auto;font-family:Georgia,"Noto Serif SC","Songti SC",serif;font-size:19px;line-height:1.95;letter-spacing:.02em}
+article.read h1{font-family:inherit;font-size:22px;margin:0 0 4px}
+article.read .by{color:var(--dim);font-size:14px;margin-bottom:26px;font-family:system-ui,sans-serif}
+article.read p{margin:0 0 1.05em;text-indent:2em;word-break:break-word}
+article.read p.noind{text-indent:0}
+.chapnav{max-width:40em;margin:36px auto 0;display:flex;gap:10px;justify-content:space-between;border-top:1px solid var(--line);padding-top:18px}
+.chapnav a{flex:1;text-align:center;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:14px;background:var(--card)}
+.chapnav a:hover{border-color:var(--accent);color:var(--accent)}
+.chapnav a.off{opacity:.4;pointer-events:none}
+.field{margin:0 0 16px}
+.field label{display:block;font-size:13.5px;color:var(--dim);margin-bottom:6px}
+.field label b{color:var(--danger)}
+.field input,.field textarea{width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:var(--card);outline:none;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--accent)}
+.field .hint{font-size:12.5px;color:var(--dim);margin-top:6px}
+.panel{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:20px;margin:0 0 20px}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:26px;text-align:center;color:var(--dim);background:var(--card);cursor:pointer;transition:.15s}
+.drop:hover,.drop.over{border-color:var(--accent);color:var(--accent);background:var(--soft)}
+.drop b{display:block;color:var(--fg);font-size:16px;margin-bottom:4px}
+.preview{max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:14px}
+.preview table{width:100%;border-collapse:collapse;font-size:13.5px}
+.preview th,.preview td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px}
+.preview th{color:var(--dim);font-weight:500;position:sticky;top:0;background:var(--card)}
+.preview td.n{color:var(--dim);font-variant-numeric:tabular-nums}
+table.admin{width:100%;border-collapse:collapse;font-size:14px}
+table.admin th,table.admin td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+table.admin th{color:var(--dim);font-weight:500;font-size:13px}
+table.admin td.t{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.stat{flex:1;min-width:120px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--card)}
+.stat b{display:block;font-size:22px;line-height:1.2}
+.stat span{color:var(--dim);font-size:12.5px}
+.split{display:grid;grid-template-columns:250px 1fr;gap:18px;align-items:start}
+@media (max-width:780px){.split{grid-template-columns:1fr}}
+.side{border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden;max-height:70vh;overflow-y:auto}
+.side div{padding:9px 13px;font-size:13.5px;border-bottom:1px solid var(--line);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.side div:hover{background:var(--soft)}
+.side div.on{background:var(--fg);color:var(--bg)}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#111;color:#fff;padding:11px 18px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.22s;z-index:99;max-width:88vw}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast.bad{background:#b42318}
+.toast.good{background:#1f7a4d}
+.kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-radius:5px;padding:2px 5px;color:var(--dim)}
+.muted{color:var(--dim);font-size:13.5px}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;background:var(--soft);padding:2px 7px;border-radius:6px;word-break:break-all}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../../index.html">我的小说站<i>免登录写作，署上你的名字</i></a>
+  <nav class="links">
+    <a href="../../index.html" class="">书架</a>
+  </nav>
+</div></header>
+<main><div class="wrap">
+<article class="read">
+  <h1>六 锉</h1>
+  <div class="by">茶涧 · 2255 字</div>
+<p>开学第一个礼拜，宿舍四个人就熟了。</p>
+<p>先到的是胖子。我推门进去的时候，他躺在上铺看手机，见了我，手机一放，翻身坐起来——坐得太急，脑袋撞在床架上，咚一声。</p>
+<p>他说：你就是茶涧？</p>
+<p>我说：是。</p>
+<p>他从上铺下来，光着脚，一步一步走近，走到跟前站住，弯下腰看我的角。另外两个也过来了，一个姓吴，一个姓陈。三个人围着我，不说话，就看。那种看法我认得，小学门口的家长也这么看，只是他们脸上带着笑。</p>
+<p>他们大概早就知道要来个什么样的。</p>
+<p>胖子先伸手，摸了一下角根，很快收回去，说：真的。</p>
+<p>然后他抓起我的手。我的手比他大一圈，指头粗，掌心有一层肉垫。他把我的手掌翻过来按了按，说：软的。</p>
+<p>胖子还捏着我的手指头，一根一根看，看到指甲，问：这个能剪吗。</p>
+<p>我说：能。</p>
+<p>他说：哦。松了手。</p>
+<p>小吴凑过来，问：你这个，好写字吗。</p>
+<p>我说：写不好。我要是写得好，可能都跟你们遇不上。</p>
+<p>老陈先反应过来，笑了一声：这话在理。</p>
+<p>胖子没听明白，看看他，又看看我：怎么就在理了。</p>
+<p>老陈说：考不上，就在这儿见不着了。</p>
+<p>胖子“哦”了一声，也笑了。</p>
+<p>后来他问我跑得快不快。我说：还行。他说：四驱的啊。那以后迟到了就找你。另外两个笑了，我也笑了。他倒不是恶意，就是嘴上没把门。</p>
+<p>再往后问得更细。问我一天吃几顿，一顿吃多少；问我洗澡要多久，毛怎么弄干；问我冬天冷不冷。胖子问一句，自己补一句“我就是好奇”，好像话先说在前头，就不算冒犯。</p>
+<p>床只剩靠门的下铺。他们问我睡下铺行不行，我说行。我把尾巴放下去，垂在床沿外头。</p>
+<p>那几夜我睡得不好。不是生气，是被人从头到脚看了一遍，看得我自己也跟着看自己。</p>
+<p>第二天早上我坐起来，角撞在上铺的床板上，咚的一声。三个人都醒了，谁也没笑，谁也没问。</p>
+<p>我把尾巴从被子里抽出来，出门洗脸。</p>
+<p>澡堂在宿舍楼后头，一层，十个喷头，中间一个大池子。头一个月我总挑最晚去，十点半，人少。可十点半也总有一两个。</p>
+<p>有一回我推门进去，一个人正背对着洗，听见门响，回头看了一下，动作停住，又转回去。我把盆放在最边上那个喷头底下，洗得比平时快。</p>
+<p>后来我学了个法子：站在门口听。里面有水声就不进，等水停了再进。有时候站二十分钟。</p>
+<p>大二开了金工实习。机械的头一门硬课，不是力学，是它。</p>
+<p>实习车间在校区最北边，一排平房，红砖，墙上刷着“安全第一”，漆掉得只剩“安”和“一”。屋里有三样气味：机油、铁屑和汗。夏天这味道糊在嗓子眼里，一天下来，鼻孔里都是黑的。</p>
+<p>第一周发料。每人一块铁，四十五毫米见方，二十毫米厚。任务是把六个面锉平，六个角锉正，做成一个正方体，平面度零点零五毫米。</p>
+<p>劳保用品是均码。手套发下来，我的手塞不进去，指头卡在虎口那儿。我把食指和中指剪了，剩下半截套在掌上。冯师傅看见了，没说话。第二天他从自己的柜子里翻出一副旧的给我，大号的，指头那儿磨得薄。</p>
+<p>指导的师傅姓冯，五十多岁，本地人，说话短，手上全是老茧，指节粗得像竹节。他不讲原理，只示范一遍：锉刀怎么握，身体怎么站，左脚在前，右脚在后，力气从腰上出，不从胳膊上出。示范完了，他把锉刀一放，说了一句：</p>
+<p>“锉吧。”</p>
+<p>于是四十几个人，一人一个台虎钳，锉了三个礼拜。</p>
+<p>锉刀走一下，铁屑落一层。声音是沙的，一片沙沙声，从早到晚，像下不完的雨。前三天，所有人的手上都起了泡；第五天，泡破了；第七天，茧出来了。我的手掌右侧磨出一道白印，摸上去不疼了，像别人的皮。</p>
+<p>冯师傅来回走，走到谁跟前就停一下，拿起卡尺量一量，不说话，把铁块放下，走了。有一次他在我跟前站了很久，拿角尺贴上去，从缝里看光。看完说：</p>
+<p>“你这面鼓着，中间高。”</p>
+<p>我说：“我量过，是平的。”</p>
+<p>冯师傅说：“卡尺量得出两点，量不出当中。”</p>
+<p>他拿了一小管红丹粉，在平台上抹了一层，把铁块按上去，磨了一转，抬起来。铁块中间一片红，四周没沾上。</p>
+<p>“你看，”冯师傅说，“高的地方先碰上。红的就是你多出来的。”</p>
+<p>我看着那片红，看了很久。</p>
+<p>那以后我每天早到半个钟头。车间没开灯，我一个人在窗下锉，锉几十下，抹一次红丹，再锉。红的那片慢慢小了，散了，成了几个点。</p>
+<p>第三个礼拜交活。冯师傅量完，把铁块往桌上一放，说：“合格。”</p>
+<p>没有别的话。四十几个人，合格的三十一个。不合格的重做，有一个锉过了头，成了个歪的，蹲在门口哭。冯师傅走过去，把烟盒递到他面前，他不要，冯师傅就自己抽了。</p>
+<p>发烟是一人一根。递到我跟前的时候，冯师傅的手停了一下。</p>
+<p>我说：不要。</p>
+<p>冯师傅说：小东西还挑。</p>
+<p>烟收回去了，也没有多问。</p>
+<p>过了几天，冯师傅站在我背后看了一会儿，对旁边的人说了一句：这后生手上有数。</p>
+<p>我听见了，没有回头。</p>
+<p>那块铁我带回了宿舍。同学笑我，说这么个玩意儿留着做什么。我也不解释，用报纸包了，塞进箱子底。</p>
+<p>大一下学期，宿舍后头有人打塑料珠子，打出去一碰就碎，打在护目镜上啪一声。我站在边上看了一下午。</p>
+<p>第二天有人递给我一把，问：来不来。我说：来。</p>
+<p>队里有个胖子，手套买大了，戴着晃。他塞给我一只：你试试。我戴正好。</p>
+<p>那年想配一副耳机成对，只买了一副，另一副一直没买。</p>
+<p>玩到第二年冬天。场地搬到校外，一趟公交四十分钟，我就不去了。手套还在。</p>
+<p>过年回家，父亲也在。他把图纸摊在饭桌上算量，计算器按得飞快，指头上有裂口，裂口里嵌着洗不掉的灰。</p>
+<p>我在旁边看。他抬头说了一句：你这个专业，将来比我有用。</p>
+<p>我没接话。他也没再说，低头接着算。桌上那盏灯有点黄，图纸的边角卷起来。</p>
+</article>
+<div class="chapnav">
+  <a href="5joqwdrnhg7s.html">← 五 送站</a>
+  <a href="../../n/y4w3wx63we7q.html">目录</a>
+  <a href="zpkqv3qwod0d.html">七 图 →</a>
+</div>
+</div></main>
+<footer class="bot"><div class="wrap">
+  静态镜像（电脑关机也能看）· 生成于 2026-11-06 18:34
+</div></footer>
+</body>
+</html>

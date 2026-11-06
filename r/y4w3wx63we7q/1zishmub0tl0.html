@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>十三 维保 - 渊</title>
+<meta name="description" content="免登录写作，署上你的名字">
+<style>
+:root{color-scheme:light dark;--bg:#fbf9f5;--fg:#1f2328;--dim:#6b7280;--line:#e5e1d8;--card:#fff;--soft:#f3efe7;--accent:#8a5a2b;--danger:#b42318;--ok:#1f7a4d}
+html[data-theme="dark"]{color-scheme:dark;--bg:#14151a;--fg:#e8e6e1;--dim:#9aa0a6;--line:#2b2d33;--card:#1b1d22;--soft:#22252b;--accent:#d8a06a;--danger:#ff8a80;--ok:#63d29a}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]){color-scheme:dark;--bg:#14151a;--fg:#e8e6e1;--dim:#9aa0a6;--line:#2b2d33;--card:#1b1d22;--soft:#22252b;--accent:#d8a06a;--danger:#ff8a80;--ok:#63d29a}}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit;color:inherit}
+.wrap{max-width:1060px;margin:0 auto;padding:0 18px;width:100%}
+header.top{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--line);background:var(--bg)}
+header.top .wrap{display:flex;align-items:center;gap:12px;min-height:60px;padding-top:8px;padding-bottom:8px}
+.brand{font-weight:700;font-size:17px;line-height:1.2;max-width:52vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brand i{display:block;font-style:normal;font-weight:400;font-size:11.5px;color:var(--dim);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+nav.links{margin-left:auto;display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+nav.links a{padding:7px 12px;border-radius:999px;font-size:14px;color:var(--dim);white-space:nowrap}
+nav.links a:hover{background:var(--soft);color:var(--fg)}
+nav.links a.on{background:var(--fg);color:var(--bg)}
+main{flex:1;width:100%;padding:26px 0 60px}
+footer.bot{border-top:1px solid var(--line);padding:22px 0;color:var(--dim);font-size:13px;text-align:center}
+footer.bot a{color:var(--dim);border-bottom:1px dotted var(--line)}
+h1{font-size:26px;line-height:1.3;margin:0 0 10px}
+h2{font-size:17px;margin:34px 0 12px}
+.hero{padding:14px 0 6px}
+.hero h1{font-size:30px;letter-spacing:.5px}
+.hero p{color:var(--dim);margin:6px 0 0;font-size:15px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.spacer{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:14.5px;line-height:1.2;transition:.15s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.pri{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:600}
+.btn.pri:hover{opacity:.88;color:var(--bg)}
+.btn.danger{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 40%,var(--line))}
+.btn.sm{padding:6px 11px;font-size:13px;border-radius:8px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.search{display:flex;gap:8px;margin:20px 0 24px}
+.search input{flex:1;padding:11px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);outline:none}
+.search input:focus{border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px}
+.card{display:block;padding:17px 18px;border:1px solid var(--line);border-radius:14px;background:var(--card);transition:.16s}
+.card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 8px 22px -16px rgba(0,0,0,.4)}
+.card h3{margin:0 0 6px;font-size:17px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .who{color:var(--accent);font-size:13.5px;font-weight:600}
+.card .sum{color:var(--dim);font-size:13.5px;margin:8px 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:22px}
+.card .meta{color:var(--dim);font-size:12.5px;margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+.notice{padding:12px 16px;border-radius:12px;background:var(--soft);border:1px solid var(--line);font-size:14px;color:var(--dim);margin:0 0 22px;white-space:pre-wrap}
+.empty{padding:56px 20px;text-align:center;color:var(--dim);border:1px dashed var(--line);border-radius:16px}
+.empty b{display:block;color:var(--fg);font-size:17px;margin-bottom:6px}
+ul.ch{list-style:none;padding:0;margin:16px 0 0;border-top:1px solid var(--line)}
+ul.ch li{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+ul.ch li span.n{color:var(--dim);font-size:12.5px;min-width:30px;text-align:right;font-variant-numeric:tabular-nums}
+ul.ch li a{flex:1;padding:13px 2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ul.ch li a:hover{color:var(--accent)}
+ul.ch li em{font-style:normal;color:var(--dim);font-size:12.5px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
+.tag{font-size:12px;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--dim);border:1px solid var(--line)}
+article.read{max-width:40em;margin:0 auto;font-family:Georgia,"Noto Serif SC","Songti SC",serif;font-size:19px;line-height:1.95;letter-spacing:.02em}
+article.read h1{font-family:inherit;font-size:22px;margin:0 0 4px}
+article.read .by{color:var(--dim);font-size:14px;margin-bottom:26px;font-family:system-ui,sans-serif}
+article.read p{margin:0 0 1.05em;text-indent:2em;word-break:break-word}
+article.read p.noind{text-indent:0}
+.chapnav{max-width:40em;margin:36px auto 0;display:flex;gap:10px;justify-content:space-between;border-top:1px solid var(--line);padding-top:18px}
+.chapnav a{flex:1;text-align:center;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:14px;background:var(--card)}
+.chapnav a:hover{border-color:var(--accent);color:var(--accent)}
+.chapnav a.off{opacity:.4;pointer-events:none}
+.field{margin:0 0 16px}
+.field label{display:block;font-size:13.5px;color:var(--dim);margin-bottom:6px}
+.field label b{color:var(--danger)}
+.field input,.field textarea{width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:var(--card);outline:none;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--accent)}
+.field .hint{font-size:12.5px;color:var(--dim);margin-top:6px}
+.panel{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:20px;margin:0 0 20px}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:26px;text-align:center;color:var(--dim);background:var(--card);cursor:pointer;transition:.15s}
+.drop:hover,.drop.over{border-color:var(--accent);color:var(--accent);background:var(--soft)}
+.drop b{display:block;color:var(--fg);font-size:16px;margin-bottom:4px}
+.preview{max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:14px}
+.preview table{width:100%;border-collapse:collapse;font-size:13.5px}
+.preview th,.preview td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px}
+.preview th{color:var(--dim);font-weight:500;position:sticky;top:0;background:var(--card)}
+.preview td.n{color:var(--dim);font-variant-numeric:tabular-nums}
+table.admin{width:100%;border-collapse:collapse;font-size:14px}
+table.admin th,table.admin td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+table.admin th{color:var(--dim);font-weight:500;font-size:13px}
+table.admin td.t{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.stat{flex:1;min-width:120px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--card)}
+.stat b{display:block;font-size:22px;line-height:1.2}
+.stat span{color:var(--dim);font-size:12.5px}
+.split{display:grid;grid-template-columns:250px 1fr;gap:18px;align-items:start}
+@media (max-width:780px){.split{grid-template-columns:1fr}}
+.side{border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden;max-height:70vh;overflow-y:auto}
+.side div{padding:9px 13px;font-size:13.5px;border-bottom:1px solid var(--line);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.side div:hover{background:var(--soft)}
+.side div.on{background:var(--fg);color:var(--bg)}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#111;color:#fff;padding:11px 18px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.22s;z-index:99;max-width:88vw}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast.bad{background:#b42318}
+.toast.good{background:#1f7a4d}
+.kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-radius:5px;padding:2px 5px;color:var(--dim)}
+.muted{color:var(--dim);font-size:13.5px}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;background:var(--soft);padding:2px 7px;border-radius:6px;word-break:break-all}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../../index.html">我的小说站<i>免登录写作，署上你的名字</i></a>
+  <nav class="links">
+    <a href="../../index.html" class="">书架</a>
+  </nav>
+</div></header>
+<main><div class="wrap">
+<article class="read">
+  <h1>十三 维保</h1>
+  <div class="by">茶涧 · 2249 字</div>
+<p>大三那个暑假我没回家，留在学校帮实验室干活。装一台旧的试验台，拆了装，装了拆，两个月。</p>
+<p>陆老师给我开了三千块，说是项目里挤出来的。我拿着钱，先去把学费的尾款交了。</p>
+<p>大四那年，班里一半人在考研。</p>
+<p>我也动过念头。去研招网上翻了两天，专硕的分数线一年比一年高，数学一的真题我看了半页，看不懂。参考书买了两本，看了半个月，垫了桌脚——不是不想考，是知道自己考不上。</p>
+<p>学校有保研名额，一个专业两个。我排在第九。</p>
+<p>到六月，只剩一条路：投简历。</p>
+<p>厂在城西。我们这地方的人叫它“大厂”，不必加名字，一说大厂，都知道是哪一家。爷爷那一辈进厂；父亲没进，去了铁建，在项目部的板房里画图、算量，省里的铁路、桥、隧道，他参与过好几处。一年回两趟家。真进厂的是母亲。</p>
+<p>我们家是技术工的家底，两个都坐办公室。父亲那间板房搭在工地中间，桌上摊着图纸、计算书、验收单；母亲在厂里的后勤保障科，管物资和设备台账，不下车间，一个星期去两回现场，看看库房，看看新到的设备。</p>
+<p>我这点手艺不是学校教出来的，是从小看出来的。</p>
+<p>大二暑假我坐了半夜的火车，去父亲的工地。</p>
+<p>工地在山里，修一段高架。板房一排，蓝顶，屋里两张床一张桌，桌上摊着图纸，压着一个搪瓷缸。他的安全帽挂在床头，内衬是黑的。</p>
+<p>他带我上桥墩。钢筋绑好了，还没浇混凝土。他指着说：这一段是我算的。</p>
+<p>中午在工地食堂，他把自己碗里的肉夹给我，说：你吃，这儿的肉不新鲜，但管够。</p>
+<p>晚上他在灯下改图，我在旁边睡着了。醒的时候他还在改，烟灰缸里有四个烟头。</p>
+<p>母亲进厂那年，我刚出生。厂里每一样东西的进出都要从她手上过一遍：入库、领用、报废。她写字一笔一笔，横是横，竖是竖，比办公楼里有些人的还好看。</p>
+<p>二十二年，她没有升过，也没有出错过。</p>
+<p>她每月十号发工资。晚上回来，把工资条摊在饭桌上，先抽出要交的：水电、煤气、给我攒的学费、她自己的药钱。四摞，一摞一摞码齐，剩下的才是菜钱。</p>
+<p>她算这些的时候不说话。算完了，把工资条夹进一个本子。那本子我后来翻过，一页一页全是数字，横平竖直。</p>
+<p>她的科室跟我的科室差不多：管的事最杂，谁都能来喊一嗓子。她从来不喊回去。</p>
+<p>我跟她说要投厂里，她正在择菜，头也没抬，说：报吧。</p>
+<p>过了两天她又说：研发我打听了，今年只要硕士。你要报，就报。</p>
+<p>我说：报。</p>
+<p>她把手在围裙上擦了擦：先进去，再说。</p>
+<p>---</p>
+<p>我在这个厂实习过。</p>
+<p>大四上学期，九月到十二月，学校要实习，我自己报的这里。分在维保科，跟着石科长跑了三个月。三个月里没修过什么大东西，修的都是小的：一台老破碎机的皮带，一台水泵的密封圈，还有车间门口那台饮水机——那个不算，是我自己看不过去。</p>
+<p>十二月走的那天，石科长说：毕业了来吧。</p>
+<p>我当时不知道这句话算不算数。</p>
+<p>---</p>
+<p>三月里人事打电话来，让我去面一面。通知上写的是研发中心。</p>
+<p>面试在办公楼三楼，一间会议室，铺着一块大红地毯，地毯上有几个烟头烫的洞。三个人坐在长桌后头，中间那个姓黄，四十来岁，头发不多，白衬衫，袖子挽到肘上。</p>
+<p>最右边那个从一开始就在看我的手。我把手放到膝盖上，他就去看墙角。</p>
+<p>第一句：你做过什么。</p>
+<p>我说：两轴伺服平台，画圆的，调了半个月闭合。</p>
+<p>第二句：你自己设计的部分，占多少。</p>
+<p>我说：机械结构我装的，程序是师兄写的。</p>
+<p>第三句：挂过科没有。</p>
+<p>我停了一下，说：挂过一门。</p>
+<p>姓黄的本子上记了一笔。</p>
+<p>第四句：传动系统的固有频率怎么算。</p>
+<p>我张了张嘴。这东西我是知道的——机器走到某个转速就抖，抖得厉害，过了那个转速又平了。我在实验室里遇见过，陆老师说那叫共振。可怎么算，我答不上来。我说：我知道它会抖，抖的时候绕开那个转速就行。</p>
+<p>三个人互相看了一眼。姓黄的说：行，你回去等通知。</p>
+<p>出来的时候，红地毯上又多了一个烟头。我没抽，是别人扔的。</p>
+<p>从三月到六月，没有消息。我以为没成。</p>
+<p>---</p>
+<p>六月，毕业。</p>
+<p>毕业照在图书馆前面的台阶上拍，全系站了四排，我在最后一排，角露在旁边那个人的肩膀上方。摄影师喊了三遍“看这里”，快门响了两下。</p>
+<p>三方协议是毕业前签的。宿舍的东西清了一遍，能卖的卖，能扔的扔。那块铁和那本《车尔尼 599》我带走了。</p>
+<p>离校前我去了一趟实验楼。陆老师已经退了，钥匙交出去，那间屋子等我们一走就拆。</p>
+<p>他在楼下搬书，一箱一箱往一辆旧电动车上码。看见我，他站直了，把手上的灰拍了拍。</p>
+<p>他说：你是干活的料，不是读书的料。</p>
+<p>这话不好听，可他说得对。</p>
+<p>我说：老师，我去了厂里。</p>
+<p>他说：知道。去干你的活。</p>
+<p>他没有再说什么，低头接着搬。</p>
+<p>走的那天，胖子他们三个帮我搬箱子。六楼，没电梯，四个人抬一个编织袋。</p>
+<p>搬完在楼下站着，谁也不知道说什么。</p>
+<p>胖子把最后一个编织袋往车斗里一塞，拍了拍手上的灰，说：四驱的，走了。</p>
+<p>我说：走了。</p>
+<p>他笑了一下，没再说话。</p>
+<p>车开出去，我从后窗看，三个人还站在那儿，越站越小。</p>
+<p>---</p>
+<p>通知是七月一号来的。</p>
+<p>那天晚上七点，我在厨房帮忙。母亲接的电话，站在阳台上，背对着屋里，“嗯”了几声，说：好，好。谢谢周科长。</p>
+<p>挂了电话，她进来，把手机放在桌上，说：</p>
+<p>“研发那边不行。专业不对口，资历也不够。维保科有一个名额，问你去不去。”</p>
+<p>我说：去。</p>
+<p>去维保是我自己点的头。研发要硕士，专业还得对得上，我两样都不占；维保要人，要能上手，这个我有。</p>
+<p>她没再说别的，转身去洗碗。水开得很大，碗碰着碗，响了一阵。</p>
+<p>---</p>
+</article>
+<div class="chapnav">
+  <a href="xs9mon90iz8b.html">← 十二 会做不会说</a>
+  <a href="../../n/y4w3wx63we7q.html">目录</a>
+  <a href="o7ljm2atee83.html">正文 →</a>
+</div>
+</div></main>
+<footer class="bot"><div class="wrap">
+  静态镜像（电脑关机也能看）· 生成于 2026-11-06 18:34
+</div></footer>
+</body>
+</html>

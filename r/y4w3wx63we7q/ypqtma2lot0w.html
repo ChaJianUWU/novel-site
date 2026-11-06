@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>七 一月 - 渊</title>
+<meta name="description" content="免登录写作，署上你的名字">
+<style>
+:root{color-scheme:light dark;--bg:#fbf9f5;--fg:#1f2328;--dim:#6b7280;--line:#e5e1d8;--card:#fff;--soft:#f3efe7;--accent:#8a5a2b;--danger:#b42318;--ok:#1f7a4d}
+html[data-theme="dark"]{color-scheme:dark;--bg:#14151a;--fg:#e8e6e1;--dim:#9aa0a6;--line:#2b2d33;--card:#1b1d22;--soft:#22252b;--accent:#d8a06a;--danger:#ff8a80;--ok:#63d29a}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]){color-scheme:dark;--bg:#14151a;--fg:#e8e6e1;--dim:#9aa0a6;--line:#2b2d33;--card:#1b1d22;--soft:#22252b;--accent:#d8a06a;--danger:#ff8a80;--ok:#63d29a}}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit;color:inherit}
+.wrap{max-width:1060px;margin:0 auto;padding:0 18px;width:100%}
+header.top{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--line);background:var(--bg)}
+header.top .wrap{display:flex;align-items:center;gap:12px;min-height:60px;padding-top:8px;padding-bottom:8px}
+.brand{font-weight:700;font-size:17px;line-height:1.2;max-width:52vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brand i{display:block;font-style:normal;font-weight:400;font-size:11.5px;color:var(--dim);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+nav.links{margin-left:auto;display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+nav.links a{padding:7px 12px;border-radius:999px;font-size:14px;color:var(--dim);white-space:nowrap}
+nav.links a:hover{background:var(--soft);color:var(--fg)}
+nav.links a.on{background:var(--fg);color:var(--bg)}
+main{flex:1;width:100%;padding:26px 0 60px}
+footer.bot{border-top:1px solid var(--line);padding:22px 0;color:var(--dim);font-size:13px;text-align:center}
+footer.bot a{color:var(--dim);border-bottom:1px dotted var(--line)}
+h1{font-size:26px;line-height:1.3;margin:0 0 10px}
+h2{font-size:17px;margin:34px 0 12px}
+.hero{padding:14px 0 6px}
+.hero h1{font-size:30px;letter-spacing:.5px}
+.hero p{color:var(--dim);margin:6px 0 0;font-size:15px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.spacer{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:14.5px;line-height:1.2;transition:.15s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.pri{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:600}
+.btn.pri:hover{opacity:.88;color:var(--bg)}
+.btn.danger{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 40%,var(--line))}
+.btn.sm{padding:6px 11px;font-size:13px;border-radius:8px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.search{display:flex;gap:8px;margin:20px 0 24px}
+.search input{flex:1;padding:11px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);outline:none}
+.search input:focus{border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px}
+.card{display:block;padding:17px 18px;border:1px solid var(--line);border-radius:14px;background:var(--card);transition:.16s}
+.card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 8px 22px -16px rgba(0,0,0,.4)}
+.card h3{margin:0 0 6px;font-size:17px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .who{color:var(--accent);font-size:13.5px;font-weight:600}
+.card .sum{color:var(--dim);font-size:13.5px;margin:8px 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:22px}
+.card .meta{color:var(--dim);font-size:12.5px;margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+.notice{padding:12px 16px;border-radius:12px;background:var(--soft);border:1px solid var(--line);font-size:14px;color:var(--dim);margin:0 0 22px;white-space:pre-wrap}
+.empty{padding:56px 20px;text-align:center;color:var(--dim);border:1px dashed var(--line);border-radius:16px}
+.empty b{display:block;color:var(--fg);font-size:17px;margin-bottom:6px}
+ul.ch{list-style:none;padding:0;margin:16px 0 0;border-top:1px solid var(--line)}
+ul.ch li{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+ul.ch li span.n{color:var(--dim);font-size:12.5px;min-width:30px;text-align:right;font-variant-numeric:tabular-nums}
+ul.ch li a{flex:1;padding:13px 2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ul.ch li a:hover{color:var(--accent)}
+ul.ch li em{font-style:normal;color:var(--dim);font-size:12.5px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
+.tag{font-size:12px;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--dim);border:1px solid var(--line)}
+article.read{max-width:40em;margin:0 auto;font-family:Georgia,"Noto Serif SC","Songti SC",serif;font-size:19px;line-height:1.95;letter-spacing:.02em}
+article.read h1{font-family:inherit;font-size:22px;margin:0 0 4px}
+article.read .by{color:var(--dim);font-size:14px;margin-bottom:26px;font-family:system-ui,sans-serif}
+article.read p{margin:0 0 1.05em;text-indent:2em;word-break:break-word}
+article.read p.noind{text-indent:0}
+.chapnav{max-width:40em;margin:36px auto 0;display:flex;gap:10px;justify-content:space-between;border-top:1px solid var(--line);padding-top:18px}
+.chapnav a{flex:1;text-align:center;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:14px;background:var(--card)}
+.chapnav a:hover{border-color:var(--accent);color:var(--accent)}
+.chapnav a.off{opacity:.4;pointer-events:none}
+.field{margin:0 0 16px}
+.field label{display:block;font-size:13.5px;color:var(--dim);margin-bottom:6px}
+.field label b{color:var(--danger)}
+.field input,.field textarea{width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:var(--card);outline:none;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--accent)}
+.field .hint{font-size:12.5px;color:var(--dim);margin-top:6px}
+.panel{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:20px;margin:0 0 20px}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:26px;text-align:center;color:var(--dim);background:var(--card);cursor:pointer;transition:.15s}
+.drop:hover,.drop.over{border-color:var(--accent);color:var(--accent);background:var(--soft)}
+.drop b{display:block;color:var(--fg);font-size:16px;margin-bottom:4px}
+.preview{max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:14px}
+.preview table{width:100%;border-collapse:collapse;font-size:13.5px}
+.preview th,.preview td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px}
+.preview th{color:var(--dim);font-weight:500;position:sticky;top:0;background:var(--card)}
+.preview td.n{color:var(--dim);font-variant-numeric:tabular-nums}
+table.admin{width:100%;border-collapse:collapse;font-size:14px}
+table.admin th,table.admin td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+table.admin th{color:var(--dim);font-weight:500;font-size:13px}
+table.admin td.t{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.stat{flex:1;min-width:120px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--card)}
+.stat b{display:block;font-size:22px;line-height:1.2}
+.stat span{color:var(--dim);font-size:12.5px}
+.split{display:grid;grid-template-columns:250px 1fr;gap:18px;align-items:start}
+@media (max-width:780px){.split{grid-template-columns:1fr}}
+.side{border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden;max-height:70vh;overflow-y:auto}
+.side div{padding:9px 13px;font-size:13.5px;border-bottom:1px solid var(--line);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.side div:hover{background:var(--soft)}
+.side div.on{background:var(--fg);color:var(--bg)}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#111;color:#fff;padding:11px 18px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.22s;z-index:99;max-width:88vw}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast.bad{background:#b42318}
+.toast.good{background:#1f7a4d}
+.kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-radius:5px;padding:2px 5px;color:var(--dim)}
+.muted{color:var(--dim);font-size:13.5px}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;background:var(--soft);padding:2px 7px;border-radius:6px;word-break:break-all}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../../index.html">我的小说站<i>免登录写作，署上你的名字</i></a>
+  <nav class="links">
+    <a href="../../index.html" class="">书架</a>
+  </nav>
+</div></header>
+<main><div class="wrap">
+<article class="read">
+  <h1>七 一月</h1>
+  <div class="by">茶涧 · 2468 字</div>
+<p>一月一号放假，放三天。早上还是六点四十醒，天没亮。躺着听了一会儿，外头的车一辆一辆过去。</p>
+<p>起来把窗帘拉开。江上有雾，对岸的山看不见，山底下一排灯看得见。</p>
+<p>米袋里剩的不多，倒进米桶，桶底铺了一层。衣服泡上，手洗，晾在阳台上，风一吹就冻硬了，收的时候得掰。</p>
+<p>三号是周六，试用期到这一天。什么也没有发生。下午我把被子拿出去晒，收回来被角还是潮的。</p>
+<p>五号上班。系统里我的岗位从“见习”改成“助理工程师”。没有人说这件事。</p>
+<p>工资条上多了一行，数字比上个月多。我看了，折起来放进钱包。钱包里那张卡还是那张卡，刷门的时候照样嘀一声。</p>
+<p>桌上堆着一摞纸，是年前没弄完的。我翻到中间一份，一页，事故调查。从头看到底，点“已阅”。</p>
+<p>措辞是平的。未按规定复核，记录填写与实际不符。后头跟三条建议：对相关责任人进行处理；对全厂高处作业固定点做一次普查；一个月内报完。</p>
+<p>纸的那一份夹在蓝色夹子里，一共两页，第二页是照片，拍的是那块底板，四个孔，锈。</p>
+<p>普查从我这里开始。一天三处，爬上去，抹一把，记下来，下来。一个星期爬了十一个点。有两个点上的漆是旧漆，摸上去有粉。</p>
+<p>十号以后屋面修完了。围挡拆了，新换的板颜色比原来的深。厂区里那条跑小车的线从厂房底下穿过去，两边让得很宽。</p>
+<p>十二号，任老把验收单推到我桌上。三联，无碳复写，最底下一张颜色最淡。</p>
+<p>他说：你上过那条绳。</p>
+<p>我拿起单子。第一栏是施工单位，外面请的，名字一长串。第二栏写屋面翻修。第三栏空着，等填。</p>
+<p>我想到十二月那天的表。备注那栏我看了半天，没写。</p>
+<p>十三号上屋面。没风。临时生命线是新拉的，一头拴在柱子上，一头拴到对面，一天一拆。施工队戴的是新帽子，钩子是双大钩，比我那个大一号。</p>
+<p>我把卡子挂上，试了两下，绳是绷的。</p>
+<p>第一个点避雷针，四个针脚，抹一把，锈是浮的，沾在指头上。第二个点风机塔，塔脚一圈胶是新的，按下去不软。</p>
+<p>第三个点是那根短柱。四个膨胀螺栓，螺帽上各划一道漆线。</p>
+<p>我蹲下去。漆是白的，划在铁的棱上。</p>
+<p>第一个按下去硬的。第二个，硬的。第三个按下去软，抬起来，指头上带了一点白。我抹在裤子上，又按第四个，也是软的。</p>
+<p>漆线是拧到位才划的。划上去，干了是硬的，抠都抠不掉。这两道是划上去的，不是拧完了划的。</p>
+<p>十二月我上来看过一趟，按过一下，那时候以为是漆没干。现在不是。</p>
+<p>我又看丝扣。螺帽跟底下的垫片之间有一道缝，垫片是斜的。</p>
+<p>下楼找到施工队那个头。他在门口抽烟，棉袄上没挂厂徽。</p>
+<p>我说：第三个点，两个螺帽，漆线是后划的。</p>
+<p>他把烟从嘴上拿下来：拧过的。</p>
+<p>我说：你跟我上去一趟。</p>
+<p>他跟我上去了，蹲下去看，看了一分钟，站起来，又蹲下去。这回不说话。</p>
+<p>他掏烟，递过来一根。我说不抽。</p>
+<p>他说：就差这一点。扳手上一回，报个数，补一下，看不出来。</p>
+<p>我没接。他把烟捏了一下，捏弯了，插回耳朵上。</p>
+<p>下午他们重拧。扭矩扳手到位嘀一声，四声，一声一声。数报给我，我记在手机上，再抄到单子上。</p>
+<p>单子最后一栏有“扣款”一格，我照规定填了数。施工队的头在底下签字，字很小。</p>
+<p>第三栏我写完了。备注那栏还剩一行空。我写了一句：固定点漆线有两处与扭矩记录不符，已返工复检。写完看一遍，把这一句划掉。</p>
+<p>划掉了字还在，一道横线压在字上。</p>
+<p>任老来看单子。他看了半天，用指头压着那一行，说：写清楚。</p>
+<p>我说：写了。</p>
+<p>他推回来。我在横线底下又写一行，一个字没改。</p>
+<p>十九号，研发中心来量屋面排烟口。来的是茶溪，还有一个戴眼镜的。</p>
+<p>两个人站在铁梯底下。上屋面要有高处作业证，茶溪没有。门禁也刷不开，得我们这摊的人带。</p>
+<p>他抬头看我。我把卷尺拿上去，本子夹在胳膊底下。</p>
+<p>排烟口两个，在北头。我量了口的外圈，报下去，他记。中间趴下去看筒壁，灰很厚，指头一按一个印。</p>
+<p>报完了我说：还有。</p>
+<p>他说：够了。</p>
+<p>我从梯子上下来。他把本子合上。</p>
+<p>他说：我那边试用期三号也到期了。表交了，科长签完就完了。</p>
+<p>我说：嗯。</p>
+<p>他说：这上头比底下冷。</p>
+<p>我说：风大。</p>
+<p>他没再说。</p>
+<p>二十六号厂里开年会。食堂的桌子拉到一头，摆成一片，凳子不够，从会议室搬了塑料的来。音响架在两张桌子上，一开就嗡嗡。</p>
+<p>领导讲今年的数，讲完抽奖。号码印在进门发的那张纸上，念到一个上去一个，领一个纸箱。我坐在靠门那桌，纸没拿出来。</p>
+<p>有人上去唱歌，唱到一半忘了词，底下拍手，跟着唱。桌上一盘瓜子，壳堆在盘子边上。</p>
+<p>我剥了两颗。</p>
+<p>背后有人喊：四驱！</p>
+<p>我手里的瓜子停在半空。尾巴一下绷紧了。</p>
+<p>这个名字是大学的。宿舍里的人起的，说我四个轮子一起转，什么坡都能上。大学四年天天有人这么叫，毕业以后没人叫过。</p>
+<p>我回头。</p>
+<p>韩磊。同一个宿舍住了四年。</p>
+<p>他先看我胸口的牌子，才看我的脸：真是你。</p>
+<p>我说：你怎么在这儿。</p>
+<p>他说：我在这儿两年了，装配分厂。</p>
+<p>我说：我在维保。</p>
+<p>他说：听说你们那屋面塌过。</p>
+<p>我说：嗯。</p>
+<p>他说：人在上头那个是你吧。</p>
+<p>我说：是我。</p>
+<p>他笑了一下：四驱还能上。</p>
+<p>他把手机掏出来，翻到一个群，翻到最上头：群还在。你看这名字。</p>
+<p>群里我的名字还挂着，头像还是一张实验室的照片。最后一条是六月，有人发了一句毕业快乐。</p>
+<p>我说：还在。</p>
+<p>他把手机收回去：加一个。</p>
+<p>我们扫了码。他拍了一下我的胳膊，回他那桌去了。</p>
+<p>我又坐了一会儿。音响里换了一首老歌。瓜子壳还是那么多。</p>
+<p>二十八号母亲打电话，问初几回。</p>
+<p>我说还没买着票。</p>
+<p>她说那就买，别等到年根。又问年货领了没有。</p>
+<p>我说领了。一箱米，一桶油，一张挂历。</p>
+<p>她说挂起来，别卷着塞柜子里。</p>
+<p>挂了电话我在手机上排队。到家的车一天三趟，硬卧，候补。排了两天，三十号晚上屏幕跳出来一条：候补成功。七点二十，二月十五。</p>
+<p>我把挂历从纸筒里抽出来，挂在门后。上面印着金字，一页一个月。二月那页红的多，从初一红到初七。</p>
+<p>米拎上来放在门里头，袋子底下垫了一张报纸。</p>
+<p>我抬头看挂历。二月十七那一格上印着一个“春”字，字边上空着一小块白。</p>
+</article>
+<div class="chapnav">
+  <a href="8qpr0x7galsh.html">← 六 十二月</a>
+  <a href="../../n/y4w3wx63we7q.html">目录</a>
+  <a href="ul6k0rgh7425.html">八 过年 →</a>
+</div>
+</div></main>
+<footer class="bot"><div class="wrap">
+  静态镜像（电脑关机也能看）· 生成于 2026-11-06 18:34
+</div></footer>
+</body>
+</html>

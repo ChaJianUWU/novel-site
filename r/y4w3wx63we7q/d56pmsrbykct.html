@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>三 九月 - 渊</title>
+<meta name="description" content="免登录写作，署上你的名字">
+<style>
+:root{color-scheme:light dark;--bg:#fbf9f5;--fg:#1f2328;--dim:#6b7280;--line:#e5e1d8;--card:#fff;--soft:#f3efe7;--accent:#8a5a2b;--danger:#b42318;--ok:#1f7a4d}
+html[data-theme="dark"]{color-scheme:dark;--bg:#14151a;--fg:#e8e6e1;--dim:#9aa0a6;--line:#2b2d33;--card:#1b1d22;--soft:#22252b;--accent:#d8a06a;--danger:#ff8a80;--ok:#63d29a}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]){color-scheme:dark;--bg:#14151a;--fg:#e8e6e1;--dim:#9aa0a6;--line:#2b2d33;--card:#1b1d22;--soft:#22252b;--accent:#d8a06a;--danger:#ff8a80;--ok:#63d29a}}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit;color:inherit}
+.wrap{max-width:1060px;margin:0 auto;padding:0 18px;width:100%}
+header.top{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--line);background:var(--bg)}
+header.top .wrap{display:flex;align-items:center;gap:12px;min-height:60px;padding-top:8px;padding-bottom:8px}
+.brand{font-weight:700;font-size:17px;line-height:1.2;max-width:52vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brand i{display:block;font-style:normal;font-weight:400;font-size:11.5px;color:var(--dim);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+nav.links{margin-left:auto;display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+nav.links a{padding:7px 12px;border-radius:999px;font-size:14px;color:var(--dim);white-space:nowrap}
+nav.links a:hover{background:var(--soft);color:var(--fg)}
+nav.links a.on{background:var(--fg);color:var(--bg)}
+main{flex:1;width:100%;padding:26px 0 60px}
+footer.bot{border-top:1px solid var(--line);padding:22px 0;color:var(--dim);font-size:13px;text-align:center}
+footer.bot a{color:var(--dim);border-bottom:1px dotted var(--line)}
+h1{font-size:26px;line-height:1.3;margin:0 0 10px}
+h2{font-size:17px;margin:34px 0 12px}
+.hero{padding:14px 0 6px}
+.hero h1{font-size:30px;letter-spacing:.5px}
+.hero p{color:var(--dim);margin:6px 0 0;font-size:15px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.spacer{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:14.5px;line-height:1.2;transition:.15s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.pri{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:600}
+.btn.pri:hover{opacity:.88;color:var(--bg)}
+.btn.danger{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 40%,var(--line))}
+.btn.sm{padding:6px 11px;font-size:13px;border-radius:8px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.search{display:flex;gap:8px;margin:20px 0 24px}
+.search input{flex:1;padding:11px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);outline:none}
+.search input:focus{border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px}
+.card{display:block;padding:17px 18px;border:1px solid var(--line);border-radius:14px;background:var(--card);transition:.16s}
+.card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 8px 22px -16px rgba(0,0,0,.4)}
+.card h3{margin:0 0 6px;font-size:17px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .who{color:var(--accent);font-size:13.5px;font-weight:600}
+.card .sum{color:var(--dim);font-size:13.5px;margin:8px 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:22px}
+.card .meta{color:var(--dim);font-size:12.5px;margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+.notice{padding:12px 16px;border-radius:12px;background:var(--soft);border:1px solid var(--line);font-size:14px;color:var(--dim);margin:0 0 22px;white-space:pre-wrap}
+.empty{padding:56px 20px;text-align:center;color:var(--dim);border:1px dashed var(--line);border-radius:16px}
+.empty b{display:block;color:var(--fg);font-size:17px;margin-bottom:6px}
+ul.ch{list-style:none;padding:0;margin:16px 0 0;border-top:1px solid var(--line)}
+ul.ch li{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+ul.ch li span.n{color:var(--dim);font-size:12.5px;min-width:30px;text-align:right;font-variant-numeric:tabular-nums}
+ul.ch li a{flex:1;padding:13px 2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ul.ch li a:hover{color:var(--accent)}
+ul.ch li em{font-style:normal;color:var(--dim);font-size:12.5px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
+.tag{font-size:12px;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--dim);border:1px solid var(--line)}
+article.read{max-width:40em;margin:0 auto;font-family:Georgia,"Noto Serif SC","Songti SC",serif;font-size:19px;line-height:1.95;letter-spacing:.02em}
+article.read h1{font-family:inherit;font-size:22px;margin:0 0 4px}
+article.read .by{color:var(--dim);font-size:14px;margin-bottom:26px;font-family:system-ui,sans-serif}
+article.read p{margin:0 0 1.05em;text-indent:2em;word-break:break-word}
+article.read p.noind{text-indent:0}
+.chapnav{max-width:40em;margin:36px auto 0;display:flex;gap:10px;justify-content:space-between;border-top:1px solid var(--line);padding-top:18px}
+.chapnav a{flex:1;text-align:center;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:14px;background:var(--card)}
+.chapnav a:hover{border-color:var(--accent);color:var(--accent)}
+.chapnav a.off{opacity:.4;pointer-events:none}
+.field{margin:0 0 16px}
+.field label{display:block;font-size:13.5px;color:var(--dim);margin-bottom:6px}
+.field label b{color:var(--danger)}
+.field input,.field textarea{width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:var(--card);outline:none;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--accent)}
+.field .hint{font-size:12.5px;color:var(--dim);margin-top:6px}
+.panel{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:20px;margin:0 0 20px}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:26px;text-align:center;color:var(--dim);background:var(--card);cursor:pointer;transition:.15s}
+.drop:hover,.drop.over{border-color:var(--accent);color:var(--accent);background:var(--soft)}
+.drop b{display:block;color:var(--fg);font-size:16px;margin-bottom:4px}
+.preview{max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:14px}
+.preview table{width:100%;border-collapse:collapse;font-size:13.5px}
+.preview th,.preview td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px}
+.preview th{color:var(--dim);font-weight:500;position:sticky;top:0;background:var(--card)}
+.preview td.n{color:var(--dim);font-variant-numeric:tabular-nums}
+table.admin{width:100%;border-collapse:collapse;font-size:14px}
+table.admin th,table.admin td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+table.admin th{color:var(--dim);font-weight:500;font-size:13px}
+table.admin td.t{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.stat{flex:1;min-width:120px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--card)}
+.stat b{display:block;font-size:22px;line-height:1.2}
+.stat span{color:var(--dim);font-size:12.5px}
+.split{display:grid;grid-template-columns:250px 1fr;gap:18px;align-items:start}
+@media (max-width:780px){.split{grid-template-columns:1fr}}
+.side{border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden;max-height:70vh;overflow-y:auto}
+.side div{padding:9px 13px;font-size:13.5px;border-bottom:1px solid var(--line);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.side div:hover{background:var(--soft)}
+.side div.on{background:var(--fg);color:var(--bg)}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#111;color:#fff;padding:11px 18px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.22s;z-index:99;max-width:88vw}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast.bad{background:#b42318}
+.toast.good{background:#1f7a4d}
+.kbd{font:12px/1 ui-monospace,monospace;border:1px solid var(--line);border-radius:5px;padding:2px 5px;color:var(--dim)}
+.muted{color:var(--dim);font-size:13.5px}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;background:var(--soft);padding:2px 7px;border-radius:6px;word-break:break-all}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../../index.html">我的小说站<i>免登录写作，署上你的名字</i></a>
+  <nav class="links">
+    <a href="../../index.html" class="">书架</a>
+  </nav>
+</div></header>
+<main><div class="wrap">
+<article class="read">
+  <h1>三 九月</h1>
+  <div class="by">茶涧 · 1714 字</div>
+<p>进了九月，天还没凉，车间的风扇还开着。</p>
+<p>门禁卡是入职时发的。我的是白的，能进各车间、食堂的门和办公楼二楼；研发楼和货场后头那几栋进不去。茶溪的是黄的，能进研发楼，能进电梯，他那一层有空调。</p>
+<p>这两张卡，我后来在裤兜里摸过很多次。白的那张薄，边上磨得起了毛；黄的那张我没摸过，只在茶溪掏卡的时候看见过一次。</p>
+<p>茶溪跟我一个院里长大，可我们不是一路人。</p>
+<p>他家里在城里有三套房子；父亲在区里做事，认识的人多；母亲那边做建材，逢年过节，车一直停到巷子口。他能进研发，主要是自己考进去的——成绩在我们那一届靠前，方案也做得出来。家里只推了一小把。</p>
+<p>那一小把推在哪儿，我不问。研发中心今年校招要硕士，他那个口子不是校招。</p>
+<p>这一小把，我没有。</p>
+<p>茶溪那边也不轻松。他们组一个方案被上面否了，理由是不符合现场条件。他一个人改到夜里两点，把原来三套结构并成一套，第二天在评审会上讲了二十分钟。</p>
+<p>讲完，否他方案的那个组长说：行，按你这个来。</p>
+<p>他跟我说这事，是在我客厅里吃炒栗子的工夫，说得轻描淡写。我听出来了，他高兴。高兴完，他把壳收进塑料袋，说：你们那个台账，真那么难补？</p>
+<p>我说：不难，烦。</p>
+<p>从小一处玩，这些事从来不妨碍什么。只是进了厂，两张卡的颜色不一样了，衬衫倒是一样的白。</p>
+<p>九月下旬有秋检。</p>
+<p>集团发下来一个文件，四个附件，表格一共十七张。石科长把文件推给我：你弄。</p>
+<p>我问：怎么弄。</p>
+<p>他说：先把该填的填了，再下去核。</p>
+<p>十七张表里有九张是设备台账。我按车间分开，一台一台对：编号、型号、出厂日期、上次保养、下次保养。有一台老压机的铭牌锈住了，字看不清，我拿砂纸磨了半个钟头，磨出一行字，跟台账上对不上——台账写的是九八年，铭牌是九六年。</p>
+<p>我照铭牌改了，在旁边加一个括号：原台账误记。</p>
+<p>石科长看见了，说：这个括号，别加。</p>
+<p>我说：为什么。</p>
+<p>他说：加了括号，就是承认以前记错了。你写个“已核实”就行。</p>
+<p>我把括号涂了。</p>
+<p>现场核了三天。一号车间到五号车间，一百四十六台设备，我一台一台走过去，鞋底磨掉一层。有两台机器台账上没有——大概是后来加的，没人报。我把它们补进去，编号照顺序往下排。</p>
+<p>表填完，交上去。石科长翻了翻，翻到第三页停住，又往后翻了两页。</p>
+<p>他说：行。</p>
+<p>就把表放桌上了。</p>
+<p>我以为他会说点别的。他没有。</p>
+<p>秋检过完没几天，安环科有个人叫我送一份材料，送到货场后头那栋，三楼。</p>
+<p>我去了。白卡贴在门上，灯是红的。门没开。我在门口站了一会儿，回来说：没进去。</p>
+<p>他说：哦，那算了。</p>
+<p>九月底一个星期天，母亲上我这儿来。她坐公交，转一趟，手上拎着一个布袋，还有一袋菜。</p>
+<p>她从街上买了档案盒。牛皮纸的，硬的，一块二一个，前头有一块小纸牌，可以写字，还带一根白棉线，绕在扣子上。</p>
+<p>进门换了鞋，她在客厅站了一会儿，看了一圈，说：还行。</p>
+<p>她把菜拿去厨房，看见水池里泡着一只碗，没说什么，把碗洗了。</p>
+<p>她走到小卧室门口，站住，往里看了一眼，没进去。问：这些贵不贵。</p>
+<p>我说：不贵。</p>
+<p>她嗯了一声。</p>
+<p>布袋里是铁盒。</p>
+<p>她把档案盒放在桌上，说：</p>
+<p>“要成家立业了，不能老用那个铁盒子。”</p>
+<p>她把铁盒从布袋里取出来。盒子已经很旧了，红裙的外国小姑娘褪成了粉的，盖子盖不严，翘着一条缝。</p>
+<p>她一样一样往外拿。八级证书。优秀奖七张，按年份排。省青少年科技创新大赛的小组奖状，铜版纸，比别的都硬。录取通知书。三方协议，一式三份，她留了一份。劳动合同，一式两份，那一份也在里头。</p>
+<p>我从抽屉里把《车尔尼 599》拿出来，翻到中间。那张纸还在，折过三次，展开是一个圆，铅笔画在 A 四纸上，起点和终点咬在一起。</p>
+<p>我把纸抽出来，放进档案盒，压在劳动合同下面。</p>
+<p>她站在门口看着，问：这是什么。</p>
+<p>我说：没用的。</p>
+<p>她没再问。</p>
+<p>东西装完，盒盖合上，棉线绕两圈，系住。盒面那块小纸牌是空的。她找了一支笔，想写点什么，笔尖悬了一会儿，最后写了我的名字。</p>
+<p>铁盒空了。她没有扔，拿抹布擦干净，装针、装线、装纽扣，装回布袋。</p>
+<p>走的时候她在阳台上站了一会儿，看江。她说：这个好。</p>
+<p>垃圾袋她要拎，我说我拎。她说：你上去。</p>
+<p>---</p>
+</article>
+<div class="chapnav">
+  <a href="20t7405deyht.html">← 二 八月</a>
+  <a href="../../n/y4w3wx63we7q.html">目录</a>
+  <a href="esrwbw492a60.html">四 十月 →</a>
+</div>
+</div></main>
+<footer class="bot"><div class="wrap">
+  静态镜像（电脑关机也能看）· 生成于 2026-11-06 18:34
+</div></footer>
+</body>
+</html>
