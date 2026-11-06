@@ -1,0 +1,13 @@
+# Netlify 配置：整站交给一个函数跑，静态目录只做占位
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/api"
+  status = 200
+  force = true
