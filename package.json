@@ -1,6 +1,6 @@
 {
   "name": "novel-site-server",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
   "description": "公网小说站：免登录上传/编辑，作者名必填，24 小时在线",
@@ -8,9 +8,13 @@
   "scripts": {
     "start": "node server.mjs",
     "verify": "node verify2.mjs",
-    "pack": "node tools/make-package.mjs"
+    "pack": "node tools/make-package.mjs",
+    "static": "node tools/build-static.mjs"
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
   }
 }
